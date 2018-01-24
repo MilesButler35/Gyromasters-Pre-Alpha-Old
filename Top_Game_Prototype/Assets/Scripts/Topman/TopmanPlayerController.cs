@@ -53,6 +53,8 @@ public class TopmanPlayerController : MonoBehaviour {
 				rb.velocity = new Vector3 (0f,0f,0f);
 				break;
 			case StateMachine.DIVE:
+				moveHorizontal = Input.GetAxis (h_MovementAxisName);
+				moveVertical = Input.GetAxis (v_MovementAxisName);
 				break;
 			case StateMachine.RUSH:
 				break;
@@ -64,9 +66,30 @@ public class TopmanPlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
+		switch (currentState) {
+			case StateMachine.MOVE:
+				Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
-		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+				rb.AddForce (movement * speed);
+				break;
+			case StateMachine.STUN:
+				break;
+			case StateMachine.BARRIER:
+				break;
+			case StateMachine.DIVE:
+				// Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+				movement = transform.forward * moveVertical * 5f * Time.deltaTime + transform.right * moveHorizontal * 5f * Time.deltaTime;
 
-		rb.AddForce (movement * speed);
+				// Apply this movement to the rigidbody's position.
+				rb.MovePosition(rb.position + movement);
+				break;
+			case StateMachine.RUSH:
+				break;
+			default:
+				movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+
+				rb.AddForce (movement * speed);
+				break;
+		}
 	}
 }
