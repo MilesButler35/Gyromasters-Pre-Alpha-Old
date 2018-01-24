@@ -12,6 +12,9 @@ public class TopmanPlayerController : MonoBehaviour {
 	private string h_MovementAxisName;          
 	private string v_MovementAxisName;  
 
+	public enum StateMachine {MOVE, STUN, BARRIER, DIVE, RUSH}
+
+	public StateMachine currentState = StateMachine.MOVE;
 
 	private void Awake()
 	{
@@ -39,8 +42,25 @@ public class TopmanPlayerController : MonoBehaviour {
 	}
 
 	void Update () {
-		moveHorizontal = Input.GetAxis (h_MovementAxisName);
-		moveVertical = Input.GetAxis (v_MovementAxisName);
+		switch (currentState) {
+			case StateMachine.MOVE:
+				moveHorizontal = Input.GetAxis (h_MovementAxisName);
+				moveVertical = Input.GetAxis (v_MovementAxisName);
+				break;
+			case StateMachine.STUN:
+				break;
+			case StateMachine.BARRIER:
+				rb.velocity = new Vector3 (0f,0f,0f);
+				break;
+			case StateMachine.DIVE:
+				break;
+			case StateMachine.RUSH:
+				break;
+			default:
+				moveHorizontal = Input.GetAxis (h_MovementAxisName);
+				moveVertical = Input.GetAxis (v_MovementAxisName);
+				break;
+		}
 	}
 
 	void FixedUpdate () {

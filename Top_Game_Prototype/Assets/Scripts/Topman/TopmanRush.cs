@@ -6,10 +6,16 @@ public class TopmanRush : MonoBehaviour
 {
 	public int m_PlayerNumber = 1;              // Used to identify the different players.
 	public float m_RushCooldown;
+	public float RushForce = 1000;
 
+	private Rigidbody rb;
+	private float moveHorizontal;
+	private float moveVertical;
+	private string h_MovementAxisName;          
+	private string v_MovementAxisName;  
 	private string m_RushButton;				// The input axis that is used for launching the spinner forward.
 	private float NextRush;						// 
-
+	private TopmanPlayerController playerController;
 
 	private void OnEnable()
 	{
@@ -22,16 +28,24 @@ public class TopmanRush : MonoBehaviour
 
 		// The fire axis is based on the player number.
 		m_RushButton = "Rush" + m_PlayerNumber;
+		h_MovementAxisName = "Horizontal" + m_PlayerNumber;
+		v_MovementAxisName = "Vertical" + m_PlayerNumber;
+		rb = GetComponent<Rigidbody>();
+		playerController = gameObject.GetComponent<TopmanPlayerController> ();
 
 	}
 
 
 	private void Update ()
 	{
+		moveHorizontal = Mathf.Round(Input.GetAxis (h_MovementAxisName));
+		moveVertical = Mathf.Round(Input.GetAxis (v_MovementAxisName));
 
-		if (Input.GetButton (m_RushButton) && Time.time > NextRush) {
+		if (Input.GetButton (m_RushButton) && Time.time > NextRush && (moveHorizontal != 0 || moveVertical != 0) && playerController.currentState == TopmanPlayerController.StateMachine.MOVE ) {
 			//If the player used the skill, reset the timer to a new point in the future
 			NextRush = Time.time + m_RushCooldown;
+
+
 
 			//Skill logic
 			Rush ();
@@ -41,7 +55,11 @@ public class TopmanRush : MonoBehaviour
 
 	private void Rush ()
 	{
+		rb.velocity = new Vector3 (0,0,0);
 
+		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+
+		rb.AddForce (movement * RushForce);
 	}
 }
 
