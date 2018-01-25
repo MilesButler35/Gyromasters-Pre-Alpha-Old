@@ -38,8 +38,8 @@ public class TopmanRush : MonoBehaviour
 
 	private void Update ()
 	{
-		moveHorizontal = Mathf.Round(Input.GetAxis (h_MovementAxisName));
-		moveVertical = Mathf.Round(Input.GetAxis (v_MovementAxisName));
+		moveHorizontal = Input.GetAxis (h_MovementAxisName); //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
+		moveVertical = Input.GetAxis (v_MovementAxisName); //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
 		if (Input.GetButton (m_RushButton) && Time.time > NextRush && (moveHorizontal != 0 || moveVertical != 0) && playerController.currentState == TopmanPlayerController.StateMachine.MOVE ) {
 			//If the player used the skill, reset the timer to a new point in the future

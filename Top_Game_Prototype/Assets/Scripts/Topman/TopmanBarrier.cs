@@ -81,7 +81,7 @@ public class TopmanBarrier : MonoBehaviour
 			if (!targetHealth)
 				continue;
 
-			float damage = CalculateDamage (targetRigidbody.position);
+			float damage = m_MaxDamage;
 
 			targetHealth.TakeDamage (damage);
 		}
