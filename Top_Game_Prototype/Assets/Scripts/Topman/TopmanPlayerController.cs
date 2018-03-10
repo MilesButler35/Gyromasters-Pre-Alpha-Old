@@ -36,13 +36,16 @@ public class TopmanPlayerController : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		h_MovementAxisName = "Horizontal" + m_PlayerNumber;
 		v_MovementAxisName = "Vertical" + m_PlayerNumber;
 	}
 
-	void Update () {
-		switch (currentState) {
+	void Update ()
+    {
+		switch (currentState)
+        {
 			case StateMachine.MOVE:
 				moveHorizontal = Input.GetAxis (h_MovementAxisName);
 				moveVertical = Input.GetAxis (v_MovementAxisName);
@@ -64,12 +67,12 @@ public class TopmanPlayerController : MonoBehaviour {
 				break;
 		}
 	}
-
-	void FixedUpdate () {
-		switch (currentState) {
+	void FixedUpdate ()
+    {
+		switch (currentState)
+        {
 			case StateMachine.MOVE:
 				Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-
 				rb.AddForce (movement * speed);
 				break;
 			case StateMachine.STUN:
@@ -84,11 +87,6 @@ public class TopmanPlayerController : MonoBehaviour {
 				rb.MovePosition(rb.position + movement);
 				break;
 			case StateMachine.RUSH:
-				break;
-			default:
-				movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-
-				rb.AddForce (movement * speed);
 				break;
 		}
 	}

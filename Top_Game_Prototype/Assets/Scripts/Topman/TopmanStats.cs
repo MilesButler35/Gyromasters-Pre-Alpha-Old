@@ -23,7 +23,8 @@ public class TopmanStats : MonoBehaviour
     private ParticleSystem m_ExplosionParticles;   
     private float m_CurrentHealth;  
 	private float m_LastVelocity; 
-    private bool m_Dead;            
+    private bool m_Dead;
+    private int KillCount = 10;
 
     private void Awake() {
         m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
@@ -84,7 +85,12 @@ public class TopmanStats : MonoBehaviour
 		SetHealthUI();
 
 		if (m_CurrentHealth <= 0f && !m_Dead) {
-			OnDeath();
+            if (KillCount == 0)
+            {
+                OnDeath();
+            }
+            else
+            RpcRespawn();
 		}
     }
 
@@ -109,5 +115,21 @@ public class TopmanStats : MonoBehaviour
 		m_ExplosionAudio.Play ();
 
 		gameObject.SetActive (false);
+    }
+    
+    private void RpcRespawn()
+    {
+        m_ExplosionParticles.transform.position = transform.position;
+        m_ExplosionParticles.gameObject.SetActive(true);
+
+        m_ExplosionParticles.Play();
+
+        m_ExplosionAudio.Play();
+
+        m_CurrentHealth = m_StartingHealth;
+
+            // move back to zero location
+            transform.position = Vector3.zero;
+    
     }
 }
