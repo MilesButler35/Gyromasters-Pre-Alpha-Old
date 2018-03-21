@@ -5,6 +5,8 @@ using UnityEngine;
 public class TopmanPlayerController : MonoBehaviour {
 	public int m_PlayerNumber = 1;
 	public float speed;
+    [HideInInspector] public float slowdownRate; //Rate at which player slows down when using a skill
+    [HideInInspector] public float hitStunTime; //Amount of time player is in stun state
 
 	private Rigidbody rb;
 	private float moveHorizontal;
@@ -35,7 +37,6 @@ public class TopmanPlayerController : MonoBehaviour {
 		rb.isKinematic = true;
 	}
 
-	// Use this for initialization
 	void Start ()
     {
 		h_MovementAxisName = "Horizontal" + m_PlayerNumber;
@@ -47,24 +48,17 @@ public class TopmanPlayerController : MonoBehaviour {
 		switch (currentState)
         {
 			case StateMachine.MOVE:
-				moveHorizontal = Input.GetAxis (h_MovementAxisName);
-				moveVertical = Input.GetAxis (v_MovementAxisName);
-				break;
+                RotateDirectionVelocity();
+                break;
 			case StateMachine.STUN:
-				break;
+                break;
 			case StateMachine.BARRIER:
-				rb.velocity = new Vector3 (0f,0f,0f);
 				break;
 			case StateMachine.DIVE:
-				moveHorizontal = Input.GetAxis (h_MovementAxisName);
-				moveVertical = Input.GetAxis (v_MovementAxisName);
 				break;
 			case StateMachine.RUSH:
-				break;
-			default:
-				moveHorizontal = Input.GetAxis (h_MovementAxisName);
-				moveVertical = Input.GetAxis (v_MovementAxisName);
-				break;
+                RotateDirectionVelocity();
+                break;
 		}
 	}
 	void FixedUpdate ()
@@ -78,16 +72,35 @@ public class TopmanPlayerController : MonoBehaviour {
 			case StateMachine.STUN:
 				break;
 			case StateMachine.BARRIER:
-				break;
+                SlowDownVelocity();        
+                break;
 			case StateMachine.DIVE:
-				// Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-				movement = transform.forward * moveVertical * 5f * Time.deltaTime + transform.right * moveHorizontal * 5f * Time.deltaTime;
-
-				// Apply this movement to the rigidbody's position.
-				rb.MovePosition(rb.position + movement);
-				break;
+                SlowDownVelocity();
+                break;
 			case StateMachine.RUSH:
-				break;
+                SlowDownVelocity();
+                break;
 		}
 	}
+
+    private void RotateDirectionVelocity ()
+    {
+        moveHorizontal = Input.GetAxis(h_MovementAxisName);
+        moveVertical = Input.GetAxis(v_MovementAxisName);
+
+        // Rotate the player character in the direction they are moving
+        Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(moveDirection);
+            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, newRotation, Time.deltaTime * 8);
+        }
+    }
+
+    private void SlowDownVelocity ()
+    {
+        // Gradually lower velocity at a rate of slowdownRate
+        rb.velocity = new Vector3(rb.velocity.x * slowdownRate, rb.velocity.y * slowdownRate, rb.velocity.z * slowdownRate);
+    }
 }
+
