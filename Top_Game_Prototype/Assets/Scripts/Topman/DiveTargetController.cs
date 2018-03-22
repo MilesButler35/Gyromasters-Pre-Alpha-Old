@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class DiveTargetController : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;
-    public float speed;
-    public GameObject m_Owner;
+    [HideInInspector] public int m_PlayerNumber = 1;
+    [HideInInspector] public float speed;
 
     private float moveHorizontal;
     private float moveVertical;
@@ -19,6 +18,7 @@ public class DiveTargetController : MonoBehaviour
         v_MovementAxisName = "Vertical" + m_PlayerNumber;
         moveHorizontal = 0f;
         moveVertical = 0f;
+        gameObject.SetActive(false);
     }
 
     void Update()
