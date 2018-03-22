@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Top_Game_Prototype", "Top_Game_Prototype.csproj", "{0BAAC74E-D0D0-62AC-F8E1-6C1ECE40F592}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Top_Game_Prototype.Editor", "Top_Game_Prototype.Editor.csproj", "{7ACB94D5-BFE1-9687-66C3-156BF4848084}"
