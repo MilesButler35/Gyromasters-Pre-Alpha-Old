@@ -283,6 +283,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUI.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIButton.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIData.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIImage.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUISlider.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIText.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\DontDestroy.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\EventSystemChecker.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\MenuObject.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\MenuSettings.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\Pause.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\PlayMusic.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\QuitApplication.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\SetAudioLevels.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\ShowPanels.cs" />
+    <Compile Include="Assets\Game Jam Template\Scripts\Menu\StartOptions.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -345,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Bowlby_One\OFL.txt" />
+    <None Include="Assets\Game Jam Template\Fonts\OpenSans\License!.txt" />
+    <None Include="Assets\Game Jam Template\GameJamTemplateReadMe.txt" />
+    <None Include="Assets\Game Jam Template\README.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

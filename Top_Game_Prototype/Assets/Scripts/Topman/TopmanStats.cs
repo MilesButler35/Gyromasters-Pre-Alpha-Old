@@ -18,7 +18,8 @@ public class TopmanStats : MonoBehaviour
     public Color m_FullHealthColor = Color.green;  
     public Color m_ZeroHealthColor = Color.red;    
     public GameObject m_ExplosionPrefab;
-    
+    public GameObject spawnPoint;
+
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;
     private TopmanPlayerController playerController;
@@ -188,8 +189,11 @@ public class TopmanStats : MonoBehaviour
 
         m_CurrentHealth = m_StartingHealth;
 
-            // move back to zero location
-            //transform.position = Vector3.zero;
-        m_Rigidbody.MovePosition(Vector3.zero);
+        // move back to zero location
+        //transform.position = Vector3.zero;
+        Vector3 spawnPos = spawnPoint.transform.position;
+        m_Rigidbody.MovePosition(spawnPos);
+        m_Rigidbody.velocity = Vector3.zero;
+        ResetState();
     }
 }
