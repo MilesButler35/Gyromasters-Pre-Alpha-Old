@@ -349,6 +349,7 @@
     <Compile Include="Assets\Scripts\Managers\AIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Topman\DiveTargetController.cs" />
+    <Compile Include="Assets\Scripts\Topman\TopmanAnim.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanBarrier.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanDive.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanPlayerController.cs" />

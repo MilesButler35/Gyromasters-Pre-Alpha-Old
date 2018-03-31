@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class TopmanDive : MonoBehaviour
 {
 	public int m_PlayerNumber = 1;              // Used to identify the different players.
-	public float m_DiveCooldown;
+    public TopmanAnim m_DiveAnim;
+    public float m_DiveCooldown;
 	public float m_TimeBeforeLanding = 1.5f;        // 
 	public LayerMask m_TankMask;
 	public ParticleSystem m_ExplosionParticles;       
@@ -47,36 +48,42 @@ public class TopmanDive : MonoBehaviour
         if (playerController.currentState != TopmanPlayerController.StateMachine.DIVE && m_DiveTarget.activeSelf)
         {
             //Destroy(target);
+
+            //Reset back to idle
             m_DiveTarget.SetActive(false);
+            m_DiveAnim.Jump(false);
+            m_DiveAnim.IsChargingDive(false);
+
         }
         if (playerController.currentState == TopmanPlayerController.StateMachine.DIVE)
         {
             resetStateTimer -= Time.deltaTime;
             Vector3 targetPosition = m_DiveTarget.transform.position;
+            if (Input.GetButtonUp(m_DiveButton))
+            {
+                //Stop movement of target and start jump animation
+                m_DiveTarget.GetComponent<DiveTargetController>().speed = 0f;
+                m_DiveAnim.IsChargingDive(false);
+                m_DiveAnim.Jump(true);
+                rb.detectCollisions = false; 
+            }
             if (resetStateTimer <= 0)
-            {               
-                landed = true;
-
-                //Skill logic
-                CreateHitBox();
-                m_DiveTarget.SetActive(false);
-
-                //m_ExplosionParticles.transform.parent = null;
-
-                m_ExplosionParticles.Play();
-
-                m_ExplosionAudio.Play();
-
-                //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
-
+            {
+                m_DiveTarget.GetComponent<DiveTargetController>().speed = 0f;
+                m_DiveAnim.IsChargingDive(false);
+                m_DiveAnim.Jump(true);
+                rb.detectCollisions = false;
             }
         }
-        if (Input.GetButton(m_DiveButton) && Time.time > nextDive && playerController.currentState == TopmanPlayerController.StateMachine.MOVE)
+        if (Input.GetButtonDown(m_DiveButton) && Time.time > nextDive && playerController.currentState == TopmanPlayerController.StateMachine.MOVE)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
-
+            
             playerController.currentState = TopmanPlayerController.StateMachine.DIVE;
+
+            // Start Charging animation
+            m_DiveAnim.IsChargingDive(true);
 
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
             m_DiveTarget.SetActive(true);
@@ -90,7 +97,7 @@ public class TopmanDive : MonoBehaviour
     {
         if (landed)
         {
-            rb.position = m_DiveTarget.transform.position;
+            //rb.position = m_DiveTarget.transform.position;
             playerController.currentState = TopmanPlayerController.StateMachine.MOVE;
             resetStateTimer = m_TimeBeforeLanding;
 
@@ -98,7 +105,7 @@ public class TopmanDive : MonoBehaviour
         }      
     }
 
-    private void CreateHitBox()
+    public void CreateHitBox()
     {
         // Instatiate hitbox with stats from this script
         GameObject instance = Instantiate(m_HitBox);
@@ -114,5 +121,30 @@ public class TopmanDive : MonoBehaviour
         //bcol.m_MaxLifeTime = m_MaxLifeTime;
         hcol.m_ExplosionRadius = m_ExplosionRadius;
         hcol.m_OwnerRigidbody = gameObject.GetComponent<Rigidbody>();
+    }
+
+    public void MoveToTarget()
+    {
+        rb.position = m_DiveTarget.transform.position;
+    }
+
+    public void OnGround()
+    {
+        landed = true;
+        m_DiveAnim.IsChargingDive(false);
+        m_DiveAnim.Jump(false);
+
+        rb.detectCollisions = true;
+        //Skill logic
+        CreateHitBox();
+        m_DiveTarget.SetActive(false);
+
+        //m_ExplosionParticles.transform.parent = null;
+
+        m_ExplosionParticles.Play();
+
+        m_ExplosionAudio.Play();
+
+        //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
     }
 }

@@ -22,6 +22,7 @@ public class HitboxCollision : MonoBehaviour {
 
     public HitboxType currentType = HitboxType.STUN;
 
+    private List<GameObject> items;
 
     private void Start()
     {

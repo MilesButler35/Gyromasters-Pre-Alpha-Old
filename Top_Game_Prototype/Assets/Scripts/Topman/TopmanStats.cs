@@ -62,7 +62,12 @@ public class TopmanStats : MonoBehaviour
     void FixedUpdate ()
     {
 		m_LastVelocity = m_Rigidbody.velocity.magnitude;
-	}
+        if (m_Dead)
+        {
+            RpcRespawn();
+            m_Dead = false;
+        }
+    }
 
 	private void OnCollisionEnter(Collision col)
     {
@@ -125,8 +130,9 @@ public class TopmanStats : MonoBehaviour
                 OnDeath();
             }
             else
-            RpcRespawn();
-		}
+                m_Dead = true;//RpcRespawn();
+
+        }
         
     }
 
@@ -143,7 +149,7 @@ public class TopmanStats : MonoBehaviour
                 OnDeath();
             }
             else
-                RpcRespawn();
+                m_Dead = true;//RpcRespawn();
         }
     }
 

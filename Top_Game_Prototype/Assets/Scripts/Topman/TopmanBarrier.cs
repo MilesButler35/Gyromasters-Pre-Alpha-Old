@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -22,6 +23,7 @@ public class TopmanBarrier : MonoBehaviour
 	private float resetStateTimer;
 	private TopmanPlayerController playerController;
     private GameObject hitbox;
+    
 
     private void OnEnable()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TopmanPlayerController : MonoBehaviour {
 	public int m_PlayerNumber = 1;
 	public float speed;
+    public float topSpeed;
     [HideInInspector] public float slowdownRate; //Rate at which player slows down when using a skill
     [HideInInspector] public float hitStunTime; //Amount of time player is in stun state
 
@@ -67,8 +68,16 @@ public class TopmanPlayerController : MonoBehaviour {
         {
 			case StateMachine.MOVE:
 				Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-				rb.AddForce (movement * speed);
-				break;
+                if (rb.velocity.magnitude > topSpeed)
+                {
+                    slowdownRate = 0.95f;
+                    SlowDownVelocity();
+                }
+                else
+                {
+                    rb.AddForce(movement * speed * rb.mass);          
+                }
+                    break;
 			case StateMachine.STUN:
 				break;
 			case StateMachine.BARRIER:

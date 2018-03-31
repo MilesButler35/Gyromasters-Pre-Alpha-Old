@@ -140,7 +140,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 9521b7c3e63086836e676e22c3e38640 Assembly-CSharp.dll:.TopmanBarrier
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FloatingText
-9b5ccb06fecfa05c32c3fae8d86da869 Assembly-CSharp.dll:.TopmanDive
+037c5f01b76f853e8d37e3a8dd51cbb5 Assembly-CSharp.dll:.TopmanDive
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 25365ec66501498d52d11616553a9368 Assembly-CSharp.dll:.Readme
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
@@ -152,7 +152,7 @@ f671a42aea5f34fec6a4450a3668c615 Assembly-CSharp.dll:UnityEngine.PostProcessing.
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 c61087bfb79b4258132dc53cb73a2fe2 Assembly-CSharp.dll:.TopmanStats
 9d998475649a9a5c1d04a38ebea8637f Assembly-CSharp.dll:.CameraFacingBillboard
-affb50d5754bd74bfe7b367a181b028e Assembly-CSharp.dll:.DiveTargetController
+af3d6eaa02177af4787fb4b5e500f4ba Assembly-CSharp.dll:.DiveTargetController
 79ea05e2f10b36e9e2f39ee76fd6fdf2 Assembly-CSharp.dll:.HitboxCollision
 131bd94aa2210929d02abb3c08bf1dbe Assembly-CSharp.dll:.TopmanRush
 22165ff26666968ebd6c0ab36f55028d Assembly-CSharp.dll:.FloatingTextControl

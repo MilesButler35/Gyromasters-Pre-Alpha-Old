@@ -52,14 +52,22 @@ public class TopmanRush : MonoBehaviour
     }
 
 
-	private void Update ()
-	{
+    private void Update()
+    {
         m_AimSlider.value = 0f; //m_MinLaunchForce
-        moveHorizontal = Input.GetAxis (h_MovementAxisName); //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
-		moveVertical = Input.GetAxis (v_MovementAxisName); //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
+        moveHorizontal = Input.GetAxis(h_MovementAxisName); //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
+        moveVertical = Input.GetAxis(v_MovementAxisName); //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
+        //If interrupted by an attack start cooldown timer
+        if (playerController.currentState == TopmanPlayerController.StateMachine.STUN && m_CurrentLaunchForce != m_MinLaunchForce)
+        {
+            m_CurrentLaunchForce = m_MinLaunchForce;
+            nextRush = Time.time + m_RushCooldown;
+            playerController.slowdownRate = 1f;
+            m_Fired = true;
+        }
         // If the max force has been exceeded and the shell hasn't yet been launched...
-        if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+        else if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
         {
             nextRush = Time.time + m_RushCooldown;
             playerController.slowdownRate = 1f;
@@ -99,7 +107,7 @@ public class TopmanRush : MonoBehaviour
             // Increment the launch force and update the slider.
             m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
 
-            m_AimSlider.value = m_CurrentLaunchForce/ m_MaxLaunchForce;
+            m_AimSlider.value = m_CurrentLaunchForce / m_MaxLaunchForce;
         }
 
         // Otherwise, if the fire button is released and the shell hasn't been launched yet...
@@ -110,7 +118,10 @@ public class TopmanRush : MonoBehaviour
             // ... launch the shell.
             Rush();
         }
-	}
+        
+
+        
+    }
 
 
 	private void Rush ()
