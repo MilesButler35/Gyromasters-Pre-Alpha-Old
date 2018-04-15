@@ -6,6 +6,7 @@ public class TopmanDive : MonoBehaviour
 {
 	public int m_PlayerNumber = 1;              // Used to identify the different players.
     public TopmanAnim m_DiveAnim;
+    public Slider m_CooldownSlider;
     public float m_DiveCooldown;
 	public float m_TimeBeforeLanding = 1.5f;        // 
 	public LayerMask m_TankMask;
@@ -40,11 +41,13 @@ public class TopmanDive : MonoBehaviour
 		playerController = gameObject.GetComponent<TopmanPlayerController> ();
 		resetStateTimer = m_TimeBeforeLanding;
 		rb = gameObject.GetComponent<Rigidbody> ();
+        m_CooldownSlider.maxValue = m_DiveCooldown;
 
 	}
 
 	private void Update ()
 	{
+        SetCooldownUI();
         if (playerController.currentState != TopmanPlayerController.StateMachine.DIVE && m_DiveTarget.activeSelf)
         {
             //Destroy(target);
@@ -126,6 +129,12 @@ public class TopmanDive : MonoBehaviour
     public void MoveToTarget()
     {
         rb.position = m_DiveTarget.transform.position;
+    }
+
+    private void SetCooldownUI()
+    {
+        // Adjust the value and colour of the slider.
+        m_CooldownSlider.value = nextDive - Time.time;
     }
 
     public void OnGround()

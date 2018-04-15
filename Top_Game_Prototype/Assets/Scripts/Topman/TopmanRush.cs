@@ -10,6 +10,7 @@ public class TopmanRush : MonoBehaviour
     public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
     public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
     public float m_RushCooldown;
+    public Slider m_CooldownSlider;
     public float m_ChargeVelocitySlowdownRate = 0.90f; // How quickly player slows down while charging skill 
                                                        // 0 = complete stop | 1 = unchanged
     public float m_MinLaunchForce = 1000;
@@ -49,12 +50,14 @@ public class TopmanRush : MonoBehaviour
         ResetStateTimer = m_TimeInState;
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         m_AimSlider.value = 0f; //m_MinLaunchForce
+        m_CooldownSlider.maxValue = m_RushCooldown;
     }
 
 
     private void Update()
     {
         m_AimSlider.value = 0f; //m_MinLaunchForce
+        SetCooldownUI();
         moveHorizontal = Input.GetAxis(h_MovementAxisName); //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
         moveVertical = Input.GetAxis(v_MovementAxisName); //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
@@ -134,5 +137,11 @@ public class TopmanRush : MonoBehaviour
 
 		rb.AddForce (movement * m_CurrentLaunchForce);
 	}
+
+    private void SetCooldownUI()
+    {
+        // Adjust the value and colour of the slider.
+        m_CooldownSlider.value = nextRush - Time.time;
+    }
 }
 

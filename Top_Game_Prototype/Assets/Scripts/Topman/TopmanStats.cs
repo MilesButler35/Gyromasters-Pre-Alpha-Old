@@ -45,6 +45,7 @@ public class TopmanStats : MonoBehaviour
 		m_Rigidbody = GetComponent<Rigidbody> ();
         playerController = gameObject.GetComponent<TopmanPlayerController>();
         SetHealthUI();
+        m_Slider.maxValue = m_StartingHealth;
         //Lose Health every 2 seconds
         InvokeRepeating("LoseHealth", 1.0f, 2f);
     }
@@ -156,7 +157,7 @@ public class TopmanStats : MonoBehaviour
     private void SetHealthUI()
     {
         // Adjust the value and colour of the slider.
-        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0f, 999f);
+        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0f, m_StartingHealth);
         m_Slider.value = m_CurrentHealth;
         m_HealthText.text = "P" + m_PlayerNumber + "| " + Mathf.Round(m_CurrentHealth);
 

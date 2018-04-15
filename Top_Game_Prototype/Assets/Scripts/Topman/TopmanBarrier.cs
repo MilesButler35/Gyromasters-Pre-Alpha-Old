@@ -7,7 +7,8 @@ public class TopmanBarrier : MonoBehaviour
 {
     public int m_PlayerNumber = 1;              // Used to identify the different players.
 	public float m_BarrierCooldown;
-	public float m_TimeInState = 1.5f;
+    public Slider m_CooldownSlider;
+    public float m_TimeInState = 1.5f;
 	public LayerMask m_TankMask;
 	public ParticleSystem m_ExplosionParticles;       
 	public AudioSource m_ExplosionAudio;              
@@ -38,12 +39,14 @@ public class TopmanBarrier : MonoBehaviour
         m_BarrierButton = "Barrier" + m_PlayerNumber;
 		playerController = gameObject.GetComponent<TopmanPlayerController> ();
 		resetStateTimer = m_TimeInState;
+        m_CooldownSlider.maxValue = m_BarrierCooldown;
 
     }
 
 
     private void Update ()
     {
+        SetCooldownUI();
         if (playerController.currentState != TopmanPlayerController.StateMachine.BARRIER && hitbox != null)
         {
             Destroy(hitbox);
@@ -97,5 +100,10 @@ public class TopmanBarrier : MonoBehaviour
         hcol.m_ExplosionRadius = m_ExplosionRadius;
         hcol.m_OwnerRigidbody = gameObject.GetComponent<Rigidbody>();
     }
-		
+
+    private void SetCooldownUI()
+    {
+        // Adjust the value and colour of the slider.
+        m_CooldownSlider.value = nextBarrier - Time.time;
+    }
 }
