@@ -51,18 +51,19 @@ public class TopmanRush : MonoBehaviour
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         m_AimSlider.value = 0f; //m_MinLaunchForce
         m_CooldownSlider.maxValue = m_RushCooldown;
+        m_CurrentLaunchForce = m_MinLaunchForce;
     }
 
 
     private void Update()
     {
         m_AimSlider.value = 0f; //m_MinLaunchForce
-        SetCooldownUI();
         moveHorizontal = Input.GetAxis(h_MovementAxisName); //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
         moveVertical = Input.GetAxis(v_MovementAxisName); //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
+
         //If interrupted by an attack start cooldown timer
-        if (playerController.currentState == TopmanPlayerController.StateMachine.STUN && m_CurrentLaunchForce != m_MinLaunchForce)
+        if (playerController.currentState == TopmanPlayerController.StateMachine.STUN && m_CurrentLaunchForce > m_MinLaunchForce)
         {
             m_CurrentLaunchForce = m_MinLaunchForce;
             nextRush = Time.time + m_RushCooldown;
@@ -121,9 +122,14 @@ public class TopmanRush : MonoBehaviour
             // ... launch the shell.
             Rush();
         }
-        
 
-        
+        if (nextRush - Time.time >= 0)
+        {
+            SetCooldownUI();
+        }
+
+
+
     }
 
 
@@ -141,7 +147,12 @@ public class TopmanRush : MonoBehaviour
     private void SetCooldownUI()
     {
         // Adjust the value and colour of the slider.
-        m_CooldownSlider.value = nextRush - Time.time;
+        float cooldownTime = nextRush - Time.time;
+        if (cooldownTime < 0.02f)
+        { 
+            cooldownTime = 0f;
+        }
+        m_CooldownSlider.value = Mathf.Clamp(cooldownTime, 0f, cooldownTime) ;
     }
 }
 

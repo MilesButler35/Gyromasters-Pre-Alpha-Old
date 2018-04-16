@@ -345,6 +345,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFacingBillboard.cs" />
+    <Compile Include="Assets\Scripts\DiveTargetCollision.cs" />
     <Compile Include="Assets\Scripts\Hitbox\HitboxCollision.cs" />
     <Compile Include="Assets\Scripts\Managers\AIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />

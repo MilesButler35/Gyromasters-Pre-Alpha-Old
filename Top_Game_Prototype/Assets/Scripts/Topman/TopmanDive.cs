@@ -47,7 +47,8 @@ public class TopmanDive : MonoBehaviour
 
 	private void Update ()
 	{
-        SetCooldownUI();
+        
+
         if (playerController.currentState != TopmanPlayerController.StateMachine.DIVE && m_DiveTarget.activeSelf)
         {
             //Destroy(target);
@@ -61,10 +62,12 @@ public class TopmanDive : MonoBehaviour
         if (playerController.currentState == TopmanPlayerController.StateMachine.DIVE)
         {
             resetStateTimer -= Time.deltaTime;
+            
             Vector3 targetPosition = m_DiveTarget.transform.position;
             if (Input.GetButtonUp(m_DiveButton))
             {
                 //Stop movement of target and start jump animation
+                m_DiveTarget.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 m_DiveTarget.GetComponent<DiveTargetController>().speed = 0f;
                 m_DiveAnim.IsChargingDive(false);
                 m_DiveAnim.Jump(true);
@@ -72,6 +75,7 @@ public class TopmanDive : MonoBehaviour
             }
             if (resetStateTimer <= 0)
             {
+                m_DiveTarget.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 m_DiveTarget.GetComponent<DiveTargetController>().speed = 0f;
                 m_DiveAnim.IsChargingDive(false);
                 m_DiveAnim.Jump(true);
@@ -94,13 +98,19 @@ public class TopmanDive : MonoBehaviour
             m_DiveTarget.GetComponent<DiveTargetController>().m_PlayerNumber = m_PlayerNumber;
             m_DiveTarget.GetComponent<DiveTargetController>().speed = m_TargetSpeed;
         }
-	}
+
+        if (nextDive - Time.time >= 0)
+        {
+            SetCooldownUI();
+        }
+    }
 
     private void FixedUpdate()
     {
         if (landed)
         {
             //rb.position = m_DiveTarget.transform.position;
+            rb.detectCollisions = true;
             playerController.currentState = TopmanPlayerController.StateMachine.MOVE;
             resetStateTimer = m_TimeBeforeLanding;
 
@@ -133,8 +143,13 @@ public class TopmanDive : MonoBehaviour
 
     private void SetCooldownUI()
     {
+        float cooldownTime = nextDive - Time.time;
+        if (cooldownTime < 0.02f)
+        {
+            cooldownTime = 0f;
+        }
         // Adjust the value and colour of the slider.
-        m_CooldownSlider.value = nextDive - Time.time;
+        m_CooldownSlider.value = cooldownTime;
     }
 
     public void OnGround()

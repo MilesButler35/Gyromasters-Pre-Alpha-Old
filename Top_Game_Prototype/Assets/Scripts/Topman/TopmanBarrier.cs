@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class TopmanBarrier : MonoBehaviour
 {
     public int m_PlayerNumber = 1;              // Used to identify the different players.
-	public float m_BarrierCooldown;
+    public float m_TopSpeed;
+    public float m_BarrierCooldown;
     public Slider m_CooldownSlider;
     public float m_TimeInState = 1.5f;
 	public LayerMask m_TankMask;
@@ -46,7 +47,7 @@ public class TopmanBarrier : MonoBehaviour
 
     private void Update ()
     {
-        SetCooldownUI();
+        
         if (playerController.currentState != TopmanPlayerController.StateMachine.BARRIER && hitbox != null)
         {
             Destroy(hitbox);
@@ -67,6 +68,7 @@ public class TopmanBarrier : MonoBehaviour
 
             //Skill logic
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
+            playerController.skillTopSpeed = m_TopSpeed;
             CreateHitBox();
 
             //Particles and Audio
@@ -78,6 +80,11 @@ public class TopmanBarrier : MonoBehaviour
             m_ExplosionAudio.Play();
 
             //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
+        }
+
+        if (nextBarrier - Time.time >= 0)
+        {
+            SetCooldownUI();
         }
 
     }
@@ -103,7 +110,12 @@ public class TopmanBarrier : MonoBehaviour
 
     private void SetCooldownUI()
     {
+        float cooldownTime = nextBarrier - Time.time;
+        if (cooldownTime < 0.02f)
+        {
+            cooldownTime = 0f;
+        }
         // Adjust the value and colour of the slider.
-        m_CooldownSlider.value = nextBarrier - Time.time;
+        m_CooldownSlider.value = cooldownTime;
     }
 }

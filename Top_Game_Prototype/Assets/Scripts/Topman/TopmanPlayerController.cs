@@ -8,8 +8,9 @@ public class TopmanPlayerController : MonoBehaviour {
     public float topSpeed;
     [HideInInspector] public float slowdownRate; //Rate at which player slows down when using a skill
     [HideInInspector] public float hitStunTime; //Amount of time player is in stun state
+    [HideInInspector] public float skillTopSpeed; //Amount of time player is in stun state
 
-	private Rigidbody rb;
+    private Rigidbody rb;
 	private float moveHorizontal;
 	private float moveVertical;
 	private string h_MovementAxisName;          
@@ -54,7 +55,8 @@ public class TopmanPlayerController : MonoBehaviour {
 			case StateMachine.STUN:
                 break;
 			case StateMachine.BARRIER:
-				break;
+                RotateDirectionVelocity();
+                break;
 			case StateMachine.DIVE:
 				break;
 			case StateMachine.RUSH:
@@ -81,7 +83,15 @@ public class TopmanPlayerController : MonoBehaviour {
 			case StateMachine.STUN:
 				break;
 			case StateMachine.BARRIER:
-                SlowDownVelocity();        
+                Vector3 Barriermovement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+                if (rb.velocity.magnitude > skillTopSpeed)
+                {
+                    SlowDownVelocity();
+                }
+                else
+                {
+                    rb.AddForce(Barriermovement * speed * rb.mass);
+                }
                 break;
 			case StateMachine.DIVE:
                 SlowDownVelocity();
@@ -111,5 +121,6 @@ public class TopmanPlayerController : MonoBehaviour {
         // Gradually lower velocity at a rate of slowdownRate
         rb.velocity = new Vector3(rb.velocity.x * slowdownRate, rb.velocity.y * slowdownRate, rb.velocity.z * slowdownRate);
     }
+
 }
 
