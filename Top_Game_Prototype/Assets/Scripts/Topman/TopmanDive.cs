@@ -14,13 +14,13 @@ public class TopmanDive : MonoBehaviour
 	public AudioSource m_ExplosionAudio;              
 	public float m_MaxDamage = 100f;
     public float m_ChargeVelocitySlowdownRate = 0.90f;
-    public float m_ExplosionForce = 1000f;
-    public GameObject m_DiveTarget;
+    public float m_ExplosionForce = 1000f;   
     public float m_TargetSpeed = 20f;
     public float m_HitStun = 2f;
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
 
+    private GameObject m_DiveTarget;
     private Rigidbody rb;
     private bool landed;
 	private string m_DiveButton;				// The input axis that is used for dive attack.
@@ -49,12 +49,10 @@ public class TopmanDive : MonoBehaviour
 	{
         
 
-        if (playerController.currentState != TopmanPlayerController.StateMachine.DIVE && m_DiveTarget.activeSelf)
+        if (playerController.currentState != TopmanPlayerController.StateMachine.DIVE && m_DiveTarget != null)
         {
-            //Destroy(target);
-
             //Reset back to idle
-            m_DiveTarget.SetActive(false);
+            Destroy(m_DiveTarget);
             m_DiveAnim.Jump(false);
             m_DiveAnim.IsChargingDive(false);
 
@@ -86,14 +84,16 @@ public class TopmanDive : MonoBehaviour
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
-            
+
+            m_CooldownSlider.interactable = false;
+
             playerController.currentState = TopmanPlayerController.StateMachine.DIVE;
 
             // Start Charging animation
             m_DiveAnim.IsChargingDive(true);
 
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
-            m_DiveTarget.SetActive(true);
+            m_DiveTarget = (GameObject)Instantiate(Resources.Load("DiveTarget"));
             m_DiveTarget.transform.position = gameObject.transform.position;
             m_DiveTarget.GetComponent<DiveTargetController>().m_PlayerNumber = m_PlayerNumber;
             m_DiveTarget.GetComponent<DiveTargetController>().speed = m_TargetSpeed;
@@ -147,6 +147,7 @@ public class TopmanDive : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
+            m_CooldownSlider.interactable = true;
         }
         // Adjust the value and colour of the slider.
         m_CooldownSlider.value = cooldownTime;
@@ -161,7 +162,7 @@ public class TopmanDive : MonoBehaviour
         rb.detectCollisions = true;
         //Skill logic
         CreateHitBox();
-        m_DiveTarget.SetActive(false);
+        Destroy(m_DiveTarget);
 
         //m_ExplosionParticles.transform.parent = null;
 

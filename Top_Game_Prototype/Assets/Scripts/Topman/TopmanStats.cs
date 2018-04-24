@@ -18,7 +18,7 @@ public class TopmanStats : MonoBehaviour
     public Color m_FullHealthColor = Color.green;  
     public Color m_ZeroHealthColor = Color.red;    
     public GameObject m_ExplosionPrefab;
-    public GameObject spawnPoint;
+    public Transform spawnPoint;
 
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;
@@ -84,7 +84,7 @@ public class TopmanStats : MonoBehaviour
 			//string s = m_PlayerNumber.ToString() + " " + damage.ToString() + " " + m_Rigidbody.velocity.magnitude.ToString();
 			//print (s);
 
-            targetHealth.TakeDamage(damage, 0.2f);
+            targetHealth.TakeDamage(damage, 0.1f);
 		}
         // Reset state to neutral if player collides with ANY object while stunned or in the middle of a rush
         else if (playerController.currentState == TopmanPlayerController.StateMachine.STUN || playerController.currentState == TopmanPlayerController.StateMachine.RUSH)
@@ -159,7 +159,10 @@ public class TopmanStats : MonoBehaviour
         // Adjust the value and colour of the slider.
         m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0f, m_StartingHealth);
         m_Slider.value = m_CurrentHealth;
-        m_HealthText.text = "P" + m_PlayerNumber + "| " + Mathf.Round(m_CurrentHealth);
+
+        //FIX later
+        if (m_HealthText != null)
+            m_HealthText.text = "P" + m_PlayerNumber + "| " + Mathf.Round(m_CurrentHealth);
 
         m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth/m_StartingHealth);
     }

@@ -64,7 +64,9 @@ public class TopmanBarrier : MonoBehaviour
 			//If the player used the skill, reset the timer to a new point in the future
 			nextBarrier = Time.time + m_BarrierCooldown;
 
-			playerController.currentState = TopmanPlayerController.StateMachine.BARRIER;
+            m_CooldownSlider.interactable = false;
+
+            playerController.currentState = TopmanPlayerController.StateMachine.BARRIER;
 
             //Skill logic
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
@@ -114,6 +116,7 @@ public class TopmanBarrier : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
+            m_CooldownSlider.interactable = true;
         }
         // Adjust the value and colour of the slider.
         m_CooldownSlider.value = cooldownTime;

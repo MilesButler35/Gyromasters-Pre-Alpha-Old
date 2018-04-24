@@ -283,6 +283,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Character Selection Screen\Examples\Script\ExampleSceneController.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\BoolCasting.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\Buttons.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\CharacterSelection.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\Fade.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\ScreenManager.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\UI\UIAnimation.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\UI\UIAutoScaler.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\UI\UIScalerEvent.cs" />
+    <Compile Include="Assets\Character Selection Screen\Script\VisibilityTrigger.cs" />
     <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUI.cs" />
     <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIButton.cs" />
     <Compile Include="Assets\Game Jam Template\Scripts\FlexibleUI\FlexibleUIData.cs" />
@@ -347,8 +357,25 @@
     <Compile Include="Assets\Scripts\Camera\CameraFacingBillboard.cs" />
     <Compile Include="Assets\Scripts\DiveTargetCollision.cs" />
     <Compile Include="Assets\Scripts\Hitbox\HitboxCollision.cs" />
+    <Compile Include="Assets\Scripts\Level\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelUI.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\ButtonRef.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\PotraitInfo.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\SelectScreenManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\MySceneManager.cs" />
+    <Compile Include="Assets\Scripts\Players\AICharacter.cs" />
+    <Compile Include="Assets\Scripts\Players\AISnapshots.cs" />
+    <Compile Include="Assets\Scripts\Players\ChangeBool.cs" />
+    <Compile Include="Assets\Scripts\Players\DoDamage.cs" />
+    <Compile Include="Assets\Scripts\Players\HandleAnimations.cs" />
+    <Compile Include="Assets\Scripts\Players\HandleDamageColliders.cs" />
+    <Compile Include="Assets\Scripts\Players\HandleMovement.cs" />
+    <Compile Include="Assets\Scripts\Players\InputHandler.cs" />
+    <Compile Include="Assets\Scripts\Players\StateManager.cs" />
     <Compile Include="Assets\Scripts\Topman\DiveTargetController.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanAnim.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanBarrier.cs" />
@@ -359,6 +386,11 @@
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingTextControl.cs" />
     <Compile Include="Assets\Scripts\UI\UIDirectionControl.cs" />
+    <Compile Include="Assets\Scripts\Utilities\FollowTransform.cs" />
+    <Compile Include="Assets\Scripts\Utilities\IntroSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Utilities\LightFlicker.cs" />
+    <Compile Include="Assets\Scripts\Utilities\Perlin.cs" />
+    <Compile Include="Assets\Scripts\Utilities\Shake.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
   </ItemGroup>
   <ItemGroup>

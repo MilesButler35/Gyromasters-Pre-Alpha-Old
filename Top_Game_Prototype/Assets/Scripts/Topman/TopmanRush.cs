@@ -137,6 +137,8 @@ public class TopmanRush : MonoBehaviour
 	{
         m_Fired = true;
 
+        m_CooldownSlider.interactable = false;
+
         rb.velocity = new Vector3 (0,0,0);
 
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
@@ -151,6 +153,7 @@ public class TopmanRush : MonoBehaviour
         if (cooldownTime < 0.02f)
         { 
             cooldownTime = 0f;
+            m_CooldownSlider.interactable = true;
         }
         m_CooldownSlider.value = Mathf.Clamp(cooldownTime, 0f, cooldownTime) ;
     }

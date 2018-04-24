@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
@@ -6,18 +7,25 @@ public class CameraControl : MonoBehaviour
     public float m_ScreenEdgeBuffer = 4f;           
     public float m_MinSize = 6.5f;                  
     //[HideInInspector] 
-	public Transform[] m_Targets; 
-
+	//public Transform[] m_Targets;
+    public List<Transform> m_Targets = new List<Transform>();
 
     private Camera m_Camera;                        
     private float m_ZoomSpeed;                      
     private Vector3 m_MoveVelocity;                 
-    private Vector3 m_DesiredPosition;              
+    private Vector3 m_DesiredPosition;
 
+    public static CameraControl instance;
+    public static CameraControl GetInstance()
+    {
+        return instance;
+    }
 
     private void Awake()
     {
+        instance = this;
         m_Camera = GetComponentInChildren<Camera>();
+        m_Targets.Clear();
     }
 
 
@@ -41,10 +49,17 @@ public class CameraControl : MonoBehaviour
         Vector3 averagePos = new Vector3();
         int numTargets = 0;
 
-        for (int i = 0; i < m_Targets.Length; i++)
+        for (int i = 0; i < m_Targets.Capacity; i++)
         {
-            if (!m_Targets[i].gameObject.activeSelf)
+            if (m_Targets[i] == null)
+            {
                 continue;
+            }
+
+            if (!m_Targets[i].gameObject.activeSelf)
+            {
+                continue;
+            }
 
             averagePos += m_Targets[i].position;
             numTargets++;
@@ -72,10 +87,17 @@ public class CameraControl : MonoBehaviour
 
         float size = 0f;
 
-        for (int i = 0; i < m_Targets.Length; i++)
+        for (int i = 0; i < m_Targets.Capacity; i++)
         {
-            if (!m_Targets[i].gameObject.activeSelf)
+            if (m_Targets[i] == null)
+            {
                 continue;
+            }
+
+            if (!m_Targets[i].gameObject.activeSelf)
+            {
+                continue;
+            }
 
             Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position);
 
@@ -102,4 +124,6 @@ public class CameraControl : MonoBehaviour
 
         m_Camera.orthographicSize = FindRequiredSize();
     }
+
+    
 }
