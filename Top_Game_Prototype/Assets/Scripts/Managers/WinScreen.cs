@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor.SceneManagement;
 
-public class WinScreen : MonoBehaviour {
+public class WinScreen : MonoBehaviour
+{
 
     public void restart()
     {

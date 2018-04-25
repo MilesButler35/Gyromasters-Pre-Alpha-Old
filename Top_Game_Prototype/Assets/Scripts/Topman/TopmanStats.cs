@@ -29,7 +29,7 @@ public class TopmanStats : MonoBehaviour
     private float m_StunTimer;
     private bool m_Dead;
     private bool m_Stunned = false;
-    private int KillCount = 2;
+    public int KillCount = 2;
 
     private void Awake()
     {
@@ -211,7 +211,6 @@ public class TopmanStats : MonoBehaviour
         System.Console.WriteLine(KillCount);
         if (KillCount == 0)
         {
-            Time.timeScale = 0;
             EditorSceneManager.LoadScene(4);
         }
     }
