@@ -77,7 +77,7 @@ public class TopmanPlayerController : MonoBehaviour {
                 }
                 else
                 {
-                    rb.AddForce(movement * speed * rb.mass * Time.deltaTime);          
+                    rb.AddForce(movement * speed * rb.mass);          
                 }
                     break;
 			case StateMachine.STUN:
@@ -90,7 +90,7 @@ public class TopmanPlayerController : MonoBehaviour {
                 }
                 else
                 {
-                    rb.AddForce(Barriermovement * speed * rb.mass * Time.deltaTime);
+                    rb.AddForce(Barriermovement * speed * rb.mass);
                 }
                 break;
 			case StateMachine.DIVE:

@@ -91,6 +91,12 @@ public class SelectScreenManager : MonoBehaviour
             {
                 if (i < numberOfPlayers)
                 {
+                    if (Input.GetButtonUp("Cancel") && !plInterfaces[i].playerBase.hasCharacter)
+                    {
+                        StartCoroutine("LoadLevelPrev");
+                        break;
+                    }
+
                     if (Input.GetButtonUp("Dive" + charManager.players[i].inputId))
                     {
                         plInterfaces[i].playerBase.hasCharacter = false;
@@ -242,6 +248,16 @@ public class SelectScreenManager : MonoBehaviour
         {
             MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "Test-Scene");
         }
+
+    }
+
+    IEnumerator LoadLevelPrev()
+    {
+        yield return new WaitForSeconds(0.6f);
+
+        string nextScene = MySceneManager.GetInstance().mainScenes[1].levelId;
+
+        MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, nextScene);
 
     }
 

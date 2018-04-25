@@ -57,7 +57,7 @@ public class TopmanDive : MonoBehaviour
             m_DiveAnim.IsChargingDive(false);
 
         }
-        if (playerController.currentState == TopmanPlayerController.StateMachine.DIVE)
+        if (playerController.currentState == TopmanPlayerController.StateMachine.DIVE && m_DiveTarget != null)
         {
             resetStateTimer -= Time.deltaTime;
             

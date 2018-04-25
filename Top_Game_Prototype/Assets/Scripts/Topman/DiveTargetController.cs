@@ -20,7 +20,7 @@ public class DiveTargetController : MonoBehaviour
         v_MovementAxisName = "Vertical" + m_PlayerNumber;
         moveHorizontal = 0f;
         moveVertical = 0f;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         Physics.IgnoreLayerCollision(10, 9);
     }
 
