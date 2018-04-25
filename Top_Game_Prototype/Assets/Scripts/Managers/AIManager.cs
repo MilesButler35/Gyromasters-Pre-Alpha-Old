@@ -9,6 +9,7 @@ public class AIManager : MonoBehaviour
     public float speed = 20;
     [HideInInspector] public float slowdownRate; //Rate at which AI slows down when using a skill
     [HideInInspector] public float hitStunTime; //Amount of time AI is in stun state
+    [HideInInspector] public float skillTopSpeed; //Amount of time player is in stun state
     public GameObject Player1;
     public GameObject self;
     public Vector3 playerPos;
@@ -19,8 +20,9 @@ public class AIManager : MonoBehaviour
     private string h_MovementAxisName;
     private string v_MovementAxisName;
     private float choice;
+    public Vector3 moveDirection;
 
-    public enum StateMachine { MOVE, STUN, BARRIER} //DIVE, RUSH }
+    public enum StateMachine { MOVE, STUN, BARRIER, DIVE, RUSH }
 
     public StateMachine currentState = StateMachine.MOVE;
 
@@ -66,12 +68,12 @@ public class AIManager : MonoBehaviour
                 break;
             case StateMachine.BARRIER:
                 break;
-           /* case StateMachine.DIVE:
+            case StateMachine.DIVE:
                 break;
             case StateMachine.RUSH:
                 RotateDirectionVelocity();
                 break;
-          */
+          
         }
     }
     void FixedUpdate()
@@ -80,20 +82,35 @@ public class AIManager : MonoBehaviour
         {
             case StateMachine.MOVE:
                 Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-                rb.AddForce(movement * speed);
+                if (rb.velocity.magnitude > 20)
+                {
+                    slowdownRate = 0.95f;
+                    SlowDownVelocity();
+                }
+                else
+                {
+                    rb.AddForce(movement * speed * rb.mass);
+                }
                 break;
             case StateMachine.STUN:
                 break;
             case StateMachine.BARRIER:
-                SlowDownVelocity();
+                Vector3 Barriermovement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+                if (rb.velocity.magnitude > 15)
+                {
+                    SlowDownVelocity();
+                }
+                else
+                {
+                    rb.AddForce(Barriermovement * speed * rb.mass);
+                }
                 break;
-           /* case StateMachine.DIVE:
+            case StateMachine.DIVE:
                 SlowDownVelocity();
                 break;
             case StateMachine.RUSH:
                 SlowDownVelocity();
                 break;
-            */
         }
     }
     private void RotateDirectionVelocity()

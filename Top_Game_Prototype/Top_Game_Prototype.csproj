@@ -352,6 +352,9 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIBarrier.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIDive.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIRush.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFacingBillboard.cs" />
     <Compile Include="Assets\Scripts\DiveTargetCollision.cs" />
