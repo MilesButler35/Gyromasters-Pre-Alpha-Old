@@ -18,11 +18,17 @@ public class TopmanStats : MonoBehaviour
     public GameObject m_DamageText;                      
     public Color m_FullHealthColor = Color.green;  
     public Color m_ZeroHealthColor = Color.red;    
+    public GameObject m_LightClashPrefab;
+    public GameObject m_HeavyClashPrefab;
     public GameObject m_ExplosionPrefab;
     public Transform spawnPoint;
 
     private AudioSource m_ExplosionAudio;          
+    private AudioSource m_LightClashAudio;
+    private AudioSource m_HeavyClashAudio;
     private ParticleSystem m_ExplosionParticles;
+    private ParticleSystem m_LightClashParticles;
+    private ParticleSystem m_HeavyClashParticles;
     private TopmanPlayerController playerController;
     private float m_CurrentHealth;  
 	private float m_LastVelocity;
@@ -35,8 +41,15 @@ public class TopmanStats : MonoBehaviour
     {
         m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
         m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
-
         m_ExplosionParticles.gameObject.SetActive(false);
+	
+	m_LightClashParticles = Instantiate(m_LightClashPrefab).GetComponent<ParticleSystem>();
+        m_LightClashAudio = m_LightClashParticles.GetComponent<AudioSource>();
+        m_LightClashParticles.gameObject.SetActive(false);
+
+        m_HeavyClashParticles = Instantiate(m_HeavyClashPrefab).GetComponent<ParticleSystem>();
+        m_HeavyClashAudio = m_HeavyClashParticles.GetComponent<AudioSource>();
+        m_HeavyClashParticles.gameObject.SetActive(false);
 
     }
 
@@ -87,18 +100,42 @@ public class TopmanStats : MonoBehaviour
         // Get object collided with's health
 		TopmanStats targetHealth = col.gameObject.GetComponent <TopmanStats>();
 
+        float damage = 0f;
 
         if (targetHealth != null) 
 		{
 			Rigidbody targetRigidbody = col.rigidbody;
 
-			float damage = CalculateDamage (m_LastVelocity, targetHealth.m_LastVelocity, targetHealth);
+			damage = CalculateDamage (m_LastVelocity, targetHealth.m_LastVelocity, targetHealth);
 
 			//string s = m_PlayerNumber.ToString() + " " + damage.ToString() + " " + m_Rigidbody.velocity.magnitude.ToString();
 			//print (s);
 
             targetHealth.TakeDamage(damage, 0.1f);
 		}
+		
+		// Visual and sound effects depend on the strength of the hit
+        if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage < 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // light hit
+        {
+            m_LightClashAudio.Play();
+
+            m_LightClashParticles.transform.position = col.transform.position;
+            m_LightClashParticles.gameObject.SetActive(true);
+
+            m_LightClashParticles.Play();
+
+                
+        }
+        else if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage >= 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // heavy hit
+        {
+            m_HeavyClashAudio.Play();
+
+            m_HeavyClashParticles.transform.position = col.transform.position;
+            m_HeavyClashParticles.gameObject.SetActive(true);
+
+            m_HeavyClashParticles.Play();
+
+        }
         // Reset state to neutral if player collides with ANY object while stunned or in the middle of a rush
         else if (playerController.currentState == TopmanPlayerController.StateMachine.STUN || playerController.currentState == TopmanPlayerController.StateMachine.RUSH)
         {
@@ -204,13 +241,14 @@ public class TopmanStats : MonoBehaviour
 
     private void RpcRespawn()
     {
-
-        gameObject.SetActive(true);
+        m_CurrentHealth = m_StartingHealth;
+       
         // move back to zero location
         //transform.position = Vector3.zero;
         Vector3 spawnPos = spawnPoint.transform.position;
         m_Rigidbody.MovePosition(spawnPos);
         m_Rigidbody.velocity = Vector3.zero;
+        gameObject.SetActive(true);
         ResetState();
         KillCount--;
         System.Console.WriteLine(KillCount);
