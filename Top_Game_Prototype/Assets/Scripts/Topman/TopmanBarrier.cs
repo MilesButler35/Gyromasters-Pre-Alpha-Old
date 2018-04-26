@@ -9,10 +9,11 @@ public class TopmanBarrier : MonoBehaviour
     public float m_TopSpeed;
     public float m_BarrierCooldown;
     public Slider m_CooldownSlider;
+    public AudioSource m_BarrierAudio;
+    public AudioClip m_ActivationClip;
     public float m_TimeInState = 1.5f;
 	public LayerMask m_TankMask;
-	public ParticleSystem m_ExplosionParticles;       
-	public AudioSource m_ExplosionAudio;              
+	public ParticleSystem m_ExplosionParticles;              
 	public float m_MaxDamage = 100f;       
     public float m_ChargeVelocitySlowdownRate = 0.90f;
 	public float m_ExplosionForce = 1000f;            
@@ -67,19 +68,20 @@ public class TopmanBarrier : MonoBehaviour
             m_CooldownSlider.interactable = false;
 
             playerController.currentState = TopmanPlayerController.StateMachine.BARRIER;
+	    
+	    //Particles and Audio
+            m_BarrierAudio.clip = m_ActivationClip;
+            m_BarrierAudio.Play();
+
 
             //Skill logic
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
             playerController.skillTopSpeed = m_TopSpeed;
             CreateHitBox();
 
-            //Particles and Audio
-
             //m_ExplosionParticles.transform.parent = null;
 
             m_ExplosionParticles.Play();
-
-            m_ExplosionAudio.Play();
 
             //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
         }

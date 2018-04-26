@@ -6,7 +6,7 @@ public class TopmanRush : MonoBehaviour
 {
 	public int m_PlayerNumber = 1;              // Used to identify the different players.
     public Slider m_AimSlider;
-    public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
+    public AudioSource m_RushAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
     public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
     public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
     public float m_RushCooldown;
@@ -65,6 +65,9 @@ public class TopmanRush : MonoBehaviour
         //If interrupted by an attack start cooldown timer
         if (playerController.currentState == TopmanPlayerController.StateMachine.STUN && m_CurrentLaunchForce > m_MinLaunchForce)
         {
+	 // Stop the charging audio
+            m_RushAudio.Stop();
+	    
             m_CurrentLaunchForce = m_MinLaunchForce;
             nextRush = Time.time + m_RushCooldown;
             playerController.slowdownRate = 1f;
@@ -78,6 +81,10 @@ public class TopmanRush : MonoBehaviour
             // ... use the max force and launch the shell.
             m_CurrentLaunchForce = m_MaxLaunchForce;
             Rush();
+	     // Cut the charging clip and change it to firing.
+            m_RushAudio.Stop();
+            m_RushAudio.clip = m_FireClip;
+            m_RushAudio.Play();
         }
         // Otherwise, if the fire button has been released and the shell has been launched...
         else if (playerController.currentState == TopmanPlayerController.StateMachine.RUSH && m_Fired)
@@ -101,8 +108,8 @@ public class TopmanRush : MonoBehaviour
             playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
             playerController.currentState = TopmanPlayerController.StateMachine.RUSH;
             // Change the clip to the charging clip and start it playing.
-            //m_ShootingAudio.clip = m_ChargingClip;
-            //m_ShootingAudio.Play();
+            m_RushAudio.clip = m_ChargingClip;
+            m_RushAudio.Play();
         }
 
         // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
@@ -121,6 +128,12 @@ public class TopmanRush : MonoBehaviour
             playerController.slowdownRate = 1f;
             // ... launch the shell.
             Rush();
+	    
+	    // If the charging clip hasn't ended, cut it.
+            m_RushAudio.Stop();
+            // Change the clip to firing and play it.
+            m_RushAudio.clip = m_FireClip;
+            m_RushAudio.Play();
         }
 
         if (nextRush - Time.time >= 0)
