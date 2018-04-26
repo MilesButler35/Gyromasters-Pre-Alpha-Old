@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 12697
+  controlID: 17405
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 12673
+  controlID: 17406
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 12674
+  controlID: 17407
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -203,9 +203,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e4d9fbff
-    m_LastClickedID: -271900
-    m_ExpandedIDs: 0027fcffe63afcfff80bfdff0c2dfdff1a3ffdffea79fdff247afdffe881fdfffa81fdff16d0fdff143ffeff7e60feff109dfeffd0ebfeffd2ebfefff806fffffa06ffff1c3cffff1e3cffff9490ffffae93ffffa4d6ffffacd6ffff4cd8ffffdceaffff98eeffff34f5ffff00000000004200009e420000
+    m_SelectedIDs: 622d0000
+    m_LastClickedID: 0
+    m_ExpandedIDs: d0eafaff24fcfaff0e0dfbff3a10fbffd499fbff50e6fbff0027fcffe63afcfff80bfdff0c2dfdff1a3ffdffea79fdff247afdffe881fdfffa81fdff16d0fdff143ffeff7e60feff109dfeffd0ebfeffd2ebfefff806fffffa06ffff1c3cffff1e3cffff9490ffffae93ffffa4d6ffffacd6ffff4cd8ffffdceaffff98eeffff34f5ffff00000000004200009e4200000a7b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -314,11 +314,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.1116665, y: 0.41604796, z: -0.051565696, w: -0.9009895}
     speed: 2
-    m_Value: {x: -0.11166616, y: 0.41604668, z: -0.051565535, w: -0.9009867}
+    m_Value: {x: -0.1116665, y: 0.41604793, z: -0.05156569, w: -0.9009894}
   m_Size:
-    m_Target: 44.576996
+    m_Target: 117.40029
     speed: 2
-    m_Value: 44.576996
+    m_Value: 117.40029
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -395,20 +395,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Bayoh_000\Documents\Unity Projects\GyroMasters\Game
     Repo\Top_Game_Prototype
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 115}
-    m_SelectedIDs: 3a2d0000
-    m_LastClickedID: 11578
-    m_ExpandedIDs: 000000009c2b0000ac2b00003a2d0000402d0000062e0000982e00000a2f0000b42f0000b62f0000b82f0000ba2f0000bc2f0000be2f0000c02f0000c22f0000c42f000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 227}
+    m_SelectedIDs: 782e0000
+    m_LastClickedID: 11896
+    m_ExpandedIDs: 000000009c2b0000ac2b00003a2d0000402d0000062e0000982e0000e62e00000a2f0000b42f0000b62f0000b82f0000ba2f0000bc2f0000be2f0000c02f0000c22f0000c42f0000346d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -436,7 +436,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009c2b0000ac2b00003a2d0000402d0000062e0000982e00000a2f0000b42f0000b62f0000b82f0000ba2f0000bc2f0000be2f0000c02f0000c22f0000c42f000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000009c2b0000ac2b00003a2d0000402d0000062e0000982e0000e62e00000a2f0000b42f0000b62f0000b82f0000ba2f0000bc2f0000be2f0000c02f0000c22f0000c42f0000346d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -461,8 +461,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: e4d9fbff
-    m_LastClickedInstanceID: -271900
+    m_SelectedInstanceIDs: 622d0000
+    m_LastClickedInstanceID: 11618
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:
