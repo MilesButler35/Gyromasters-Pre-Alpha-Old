@@ -10,11 +10,13 @@ public class LevelManager : MonoBehaviour {
     public Slider p1BSlider;
     public Slider p1RSlider;
     public Slider p1DSlider;
+    public Text p1Lives;
 
     public Text p2Health;
     public Slider p2BSlider;
     public Slider p2RSlider;
     public Slider p2DSlider;
+    public Text p2Lives;
 
     WaitForSeconds oneSec;//we will be using this a lot so we don't want to create a new one everytime, saves a few bytes this
     public Transform[] spawnPositions;// the positions characters will spawn on

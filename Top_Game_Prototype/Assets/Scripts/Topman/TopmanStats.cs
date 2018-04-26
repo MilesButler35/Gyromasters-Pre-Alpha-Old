@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 public class TopmanStats : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class TopmanStats : MonoBehaviour
     private float m_StunTimer;
     private bool m_Dead;
     private bool m_Stunned = false;
-    private int KillCount = 10;
+    public int KillCount = 2;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class TopmanStats : MonoBehaviour
         m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
 
         m_ExplosionParticles.gameObject.SetActive(false);
+
     }
 
     private void Start()
@@ -210,5 +212,11 @@ public class TopmanStats : MonoBehaviour
         m_Rigidbody.MovePosition(spawnPos);
         m_Rigidbody.velocity = Vector3.zero;
         ResetState();
+        KillCount--;
+        System.Console.WriteLine(KillCount);
+        if (KillCount == 0)
+        {
+            EditorSceneManager.LoadScene(4);
+        }
     }
 }

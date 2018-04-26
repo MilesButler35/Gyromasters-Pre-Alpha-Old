@@ -353,6 +353,9 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIBarrier.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIDive.cs" />
+    <Compile Include="Assets\Scripts\AI Abilities\AIRush.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFacingBillboard.cs" />
     <Compile Include="Assets\Scripts\DiveTargetCollision.cs" />
@@ -369,6 +372,7 @@
     <Compile Include="Assets\Scripts\MainMenu\SelectScreenManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\WinScreen.cs" />
     <Compile Include="Assets\Scripts\MySceneManager.cs" />
     <Compile Include="Assets\Scripts\Players\AICharacter.cs" />
     <Compile Include="Assets\Scripts\Players\AISnapshots.cs" />
@@ -380,6 +384,7 @@
     <Compile Include="Assets\Scripts\Players\InputHandler.cs" />
     <Compile Include="Assets\Scripts\Players\StateManager.cs" />
     <Compile Include="Assets\Scripts\Topman\DiveTargetController.cs" />
+    <Compile Include="Assets\Scripts\Topman\RestartGame.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanAnim.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanBarrier.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanDive.cs" />
