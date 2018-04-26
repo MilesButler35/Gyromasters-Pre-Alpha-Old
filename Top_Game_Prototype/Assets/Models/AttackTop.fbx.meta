@@ -34,7 +34,12 @@ ModelImporter:
     9500000: //RootNode
     13700000: Spinner
     13700002: Cube
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 0c6bb1699d6bdba488d2166e85a56585, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
