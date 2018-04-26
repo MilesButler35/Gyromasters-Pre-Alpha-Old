@@ -4,22 +4,27 @@ using UnityEngine.UI;
 
 public class TopmanDive : MonoBehaviour
 {
-	public int m_PlayerNumber = 1;              // Used to identify the different players.
+    public int m_PlayerNumber = 1;              // Used to identify the different players.
     public TopmanAnim m_DiveAnim;
     public Slider m_CooldownSlider;
     public float m_DiveCooldown;
-	public float m_TimeBeforeLanding = 1.5f;        // 
-	public LayerMask m_TankMask;
-	public ParticleSystem m_ExplosionParticles;       
-	public AudioSource m_ExplosionAudio;              
-	public float m_MaxDamage = 100f;
+    public float m_TimeBeforeLanding = 1.5f;        // 
+    public LayerMask m_TankMask;
+    public AudioSource m_DiveAudio;
+    public AudioClip m_JumpClip;                // Audio clip for start of jump
+    public AudioClip m_CrashClip;               // Audio clip for landing
+    public ParticleSystem m_ExplosionParticles;         
+    public float m_MaxDamage = 100f;
     public float m_ChargeVelocitySlowdownRate = 0.90f;
     public float m_ExplosionForce = 1000f;   
     public float m_TargetSpeed = 20f;
     public float m_HitStun = 2f;
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
+    public GameObject m_CrashPrefab;
 
+    
+    private ParticleSystem m_LandParticles;
     private GameObject m_DiveTarget;
     private Rigidbody rb;
     private bool landed;
@@ -28,6 +33,11 @@ public class TopmanDive : MonoBehaviour
 	private float resetStateTimer;
 	private TopmanPlayerController playerController;
 
+    private void Awake()
+    {
+        m_LandParticles = Instantiate(m_CrashPrefab).GetComponent<ParticleSystem>();
+        m_LandParticles.gameObject.SetActive(false);
+    }
     private void OnEnable()
 	{
 
@@ -70,6 +80,10 @@ public class TopmanDive : MonoBehaviour
                 m_DiveAnim.IsChargingDive(false);
                 m_DiveAnim.Jump(true);
                 rb.detectCollisions = false; 
+		
+		// Audio for jumping
+		m_DiveAudio.clip = m_JumpClip;
+                m_DiveAudio.Play();
             }
             if (resetStateTimer <= 0)
             {
@@ -166,9 +180,13 @@ public class TopmanDive : MonoBehaviour
 
         //m_ExplosionParticles.transform.parent = null;
 
-        m_ExplosionParticles.Play();
-
-        m_ExplosionAudio.Play();
+	// Particles and audio for landing
+ 	m_DiveAudio.clip = m_CrashClip;
+        m_DiveAudio.Play();
+         
+        m_LandParticles.transform.position = m_DiveTarget.transform.position;
+        m_LandParticles.gameObject.SetActive(true);
+        m_LandParticles.Play();
 
         //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
     }
