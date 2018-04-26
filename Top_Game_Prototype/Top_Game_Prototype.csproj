@@ -356,6 +356,9 @@
     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFacingBillboard.cs" />
     <Compile Include="Assets\Scripts\DiveTargetCollision.cs" />
+    <Compile Include="Assets\Scripts\Hitbox\DeathCollision.cs" />
+    <Compile Include="Assets\Scripts\Hitbox\EdgeCollision.cs" />
+    <Compile Include="Assets\Scripts\Hitbox\ForceCollision.cs" />
     <Compile Include="Assets\Scripts\Hitbox\HitboxCollision.cs" />
     <Compile Include="Assets\Scripts\Level\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />

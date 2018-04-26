@@ -38,6 +38,11 @@ public class TopmanStats : MonoBehaviour
         m_ExplosionParticles.gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        InvokeRepeating("LoseHealth", 1.0f, 2f);
+    }
+
     private void OnEnable()
     {
         m_CurrentHealth = m_StartingHealth;
@@ -47,7 +52,7 @@ public class TopmanStats : MonoBehaviour
         SetHealthUI();
         m_Slider.maxValue = m_StartingHealth;
         //Lose Health every 2 seconds
-        InvokeRepeating("LoseHealth", 1.0f, 2f);
+        //InvokeRepeating("LoseHealth", 1.0f, 2f);
     }
 
     void Update()
@@ -57,6 +62,11 @@ public class TopmanStats : MonoBehaviour
             // Reset state back to neutral after m_StunTimer amount of time
             Invoke("ResetState", m_StunTimer);
             m_Stunned = false;           
+        }
+        if(m_CurrentHealth <= 0)
+        {
+            Invoke("RpcRespawn", 3f);
+            OnDeath();
         }
     }
 
@@ -74,6 +84,7 @@ public class TopmanStats : MonoBehaviour
     {
         // Get object collided with's health
 		TopmanStats targetHealth = col.gameObject.GetComponent <TopmanStats>();
+
 
         if (targetHealth != null) 
 		{
@@ -130,8 +141,8 @@ public class TopmanStats : MonoBehaviour
             {
                 OnDeath();
             }
-            else
-                m_Dead = true;//RpcRespawn();
+            //else
+                //m_Dead = true;//RpcRespawn();
 
         }
         
@@ -149,8 +160,8 @@ public class TopmanStats : MonoBehaviour
             {
                 OnDeath();
             }
-            else
-                m_Dead = true;//RpcRespawn();
+            //else
+                //m_Dead = true;//RpcRespawn();
         }
     }
 
@@ -171,16 +182,17 @@ public class TopmanStats : MonoBehaviour
     private void OnDeath()
     {
         // Play the effects for the death of the tank and deactivate it.
-		m_Dead = true;
-
-		m_ExplosionParticles.transform.position = transform.position;
+        //m_Dead = true;
+        m_CurrentHealth = m_StartingHealth;
+        m_ExplosionParticles.transform.position = transform.position;
 		m_ExplosionParticles.gameObject.SetActive (true);
 
 		m_ExplosionParticles.Play ();
 
 		m_ExplosionAudio.Play ();
 
-		gameObject.SetActive (false);
+        gameObject.SetActive(false);
+
     }
 
     private void ResetState()
@@ -190,15 +202,8 @@ public class TopmanStats : MonoBehaviour
 
     private void RpcRespawn()
     {
-        m_ExplosionParticles.transform.position = transform.position;
-        m_ExplosionParticles.gameObject.SetActive(true);
 
-        m_ExplosionParticles.Play();
-
-        m_ExplosionAudio.Play();
-
-        m_CurrentHealth = m_StartingHealth;
-
+        gameObject.SetActive(true);
         // move back to zero location
         //transform.position = Vector3.zero;
         Vector3 spawnPos = spawnPoint.transform.position;

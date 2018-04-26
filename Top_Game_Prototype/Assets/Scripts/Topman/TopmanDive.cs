@@ -138,7 +138,8 @@ public class TopmanDive : MonoBehaviour
 
     public void MoveToTarget()
     {
-        rb.position = m_DiveTarget.transform.position;
+        if (m_DiveTarget != null)
+            rb.position = m_DiveTarget.transform.position;
     }
 
     private void SetCooldownUI()
