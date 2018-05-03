@@ -15,6 +15,8 @@ public class ForceCollision : MonoBehaviour
         if (!targetRigidbody)
             return;
 
+        targetRigidbody.constraints = RigidbodyConstraints.None;
+
         targetRigidbody.AddForce(Vector3.up * force);
     }
 }

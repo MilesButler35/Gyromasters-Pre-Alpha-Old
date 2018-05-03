@@ -90,6 +90,8 @@ public class TopmanStats : MonoBehaviour
 		m_LastVelocity = m_Rigidbody.velocity.magnitude;
         if (m_Dead)
         {
+            Vector3 spawnPos = spawnPoint.transform.position;
+            m_Rigidbody.MovePosition(spawnPos);
             RpcRespawn();
             m_Dead = false;
         }
@@ -112,36 +114,37 @@ public class TopmanStats : MonoBehaviour
 			//print (s);
 
             targetHealth.TakeDamage(damage, 0.1f);
-		}
 		
-		// Visual and sound effects depend on the strength of the hit
-        if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage < 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // light hit
-        {
-            m_LightClashAudio.Play();
+		
+		    // Visual and sound effects depend on the strength of the hit
+            if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage < 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // light hit
+            {
+                m_LightClashAudio.Play();
 
-            m_LightClashParticles.transform.position = col.transform.position;
-            m_LightClashParticles.gameObject.SetActive(true);
+                m_LightClashParticles.transform.position = col.transform.position;
+                m_LightClashParticles.gameObject.SetActive(true);
 
-            m_LightClashParticles.Play();
+                m_LightClashParticles.Play();
 
                 
-        }
-        else if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage >= 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // heavy hit
-        {
-            m_HeavyClashAudio.Play();
+            }
+            else if ((m_LastVelocity > targetHealth.m_LastVelocity) && (damage >= 35) && ((targetHealth.m_CurrentHealth - damage) > 0)) // heavy hit
+            {
+                m_HeavyClashAudio.Play();
 
-            m_HeavyClashParticles.transform.position = col.transform.position;
-            m_HeavyClashParticles.gameObject.SetActive(true);
+                m_HeavyClashParticles.transform.position = col.transform.position;
+                m_HeavyClashParticles.gameObject.SetActive(true);
 
-            m_HeavyClashParticles.Play();
+                m_HeavyClashParticles.Play();
 
+            }
+            // Reset state to neutral if player collides with ANY object while stunned or in the middle of a rush
+            else if (playerController.currentState == TopmanPlayerController.StateMachine.STUN || playerController.currentState == TopmanPlayerController.StateMachine.RUSH)
+            {
+                ResetState();
+            }
         }
-        // Reset state to neutral if player collides with ANY object while stunned or in the middle of a rush
-        else if (playerController.currentState == TopmanPlayerController.StateMachine.STUN || playerController.currentState == TopmanPlayerController.StateMachine.RUSH)
-        {
-            ResetState();
-        }
-	}
+    }
 		
 
 	private float CalculateDamage(float currentVelocity, float targetVelocity, TopmanStats targetHealth)
@@ -229,7 +232,9 @@ public class TopmanStats : MonoBehaviour
 		m_ExplosionParticles.Play ();
 
 		m_ExplosionAudio.Play ();
-
+        Vector3 spawnPos = spawnPoint.transform.position;
+        gameObject.transform.position = spawnPos;
+        
         gameObject.SetActive(false);
 
     }
@@ -247,6 +252,7 @@ public class TopmanStats : MonoBehaviour
         //transform.position = Vector3.zero;
         Vector3 spawnPos = spawnPoint.transform.position;
         m_Rigidbody.MovePosition(spawnPos);
+        m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         m_Rigidbody.velocity = Vector3.zero;
         gameObject.SetActive(true);
         ResetState();

@@ -156,7 +156,7 @@ public class TopmanRush : MonoBehaviour
 
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
-		rb.AddForce (movement * m_CurrentLaunchForce);
+		rb.AddForce (rb.transform.forward * m_CurrentLaunchForce);
 	}
 
     private void SetCooldownUI()

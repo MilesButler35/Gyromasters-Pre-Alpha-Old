@@ -3,6 +3,18 @@ using UnityEditor.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
+    public void Update()
+    {
+        if (Input.GetButton("Submit"))
+        {
+            restart();
+        }
+
+        else if (Input.GetButton("Cancel"))
+        {
+            select();
+        }
+    }
 
     public void restart()
     {
