@@ -10,7 +10,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public float slowdownRate; //Rate at which AI slows down when using a skill
     [HideInInspector] public float hitStunTime; //Amount of time AI is in stun state
     [HideInInspector] public float skillTopSpeed; //Amount of time player is in stun state
-    public GameObject Player1;
+    public GameObject Player1 = GameObject.Find("Player1");
     public GameObject self;
     public Vector3 playerPos;
     public Vector3 selfPos;
@@ -45,6 +45,7 @@ public class AIManager : MonoBehaviour
     }
     void Start()
     {
+        Player1 = GameObject.Find("Player1");
         h_MovementAxisName = "Horizontal" + m_PlayerNumber;
         v_MovementAxisName = "Vertical" + m_PlayerNumber;
     }
@@ -52,11 +53,12 @@ public class AIManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        choice = Random.Range(0, 100);
+        /*choice = Random.Range(0, 100);
         if(choice <= 5 && self.GetComponent<TopmanBarrier>().m_BarrierCooldown ==0)
         {
             currentState = StateMachine.BARRIER;
-        }
+        }*/
+        Player1 = GameObject.Find("Player1");
         playerPos = Player1.transform.position;
         selfPos = self.transform.position;
         switch (currentState)
@@ -94,7 +96,7 @@ public class AIManager : MonoBehaviour
                 break;
             case StateMachine.STUN:
                 break;
-            case StateMachine.BARRIER:
+           /* case StateMachine.BARRIER:
                 Vector3 Barriermovement = new Vector3(moveHorizontal, 0.0f, moveVertical);
                 if (rb.velocity.magnitude > 15)
                 {
@@ -110,7 +112,7 @@ public class AIManager : MonoBehaviour
                 break;
             case StateMachine.RUSH:
                 SlowDownVelocity();
-                break;
+                break;*/
         }
     }
     private void RotateDirectionVelocity()

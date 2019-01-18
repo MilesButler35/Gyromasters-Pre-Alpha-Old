@@ -115,6 +115,7 @@ public class IntroSceneManager : MonoBehaviour {
         {
              case 0:
                 CharacterManager.GetInstance().numberOfUsers = 1;
+                CharacterManager.GetInstance().players[1].playerType = PlayerBase.PlayerType.ai;
                 break;
              case 1:
                 CharacterManager.GetInstance().numberOfUsers = 2;

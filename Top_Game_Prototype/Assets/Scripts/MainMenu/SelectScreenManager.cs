@@ -232,6 +232,9 @@ public class SelectScreenManager : MonoBehaviour
                     charManager.players[i].playerPrefab = 
                         charManager.returnCharacterWithID(potraitList[ranValue].characterId).prefab;
 
+                    charManager.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<AIManager>().enabled = true;
+
                     Debug.Log(potraitList[ranValue].characterId);
                 }
             }
