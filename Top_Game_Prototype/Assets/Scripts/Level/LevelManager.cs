@@ -110,7 +110,8 @@ public class LevelManager : MonoBehaviour {
         yield return EnableControl();
 
     }
-
+    
+    //TODO Check if actor is a "user" or "AI" in the character manager and activate relevant scripts
     IEnumerator CreatePlayers()
     {
         //go to all the players we have in our list

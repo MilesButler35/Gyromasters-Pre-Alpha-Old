@@ -10,7 +10,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public float slowdownRate; //Rate at which AI slows down when using a skill
     [HideInInspector] public float hitStunTime; //Amount of time AI is in stun state
     [HideInInspector] public float skillTopSpeed; //Amount of time player is in stun state
-    public GameObject Player1 = GameObject.Find("Player1");
+    public GameObject Player1;
     public GameObject self;
     public Vector3 playerPos;
     public Vector3 selfPos;
