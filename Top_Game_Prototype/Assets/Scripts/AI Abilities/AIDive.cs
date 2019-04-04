@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class AIDive : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;              // Used to identify the different players.
+    public int m_PlayerNumber = 2;              // Used to identify the different players.
     public TopmanAnim m_DiveAnim;
     public Slider m_CooldownSlider;
     public float m_DiveCooldown;

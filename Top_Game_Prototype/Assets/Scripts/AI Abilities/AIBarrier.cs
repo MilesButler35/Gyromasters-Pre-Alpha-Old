@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AIBarrier : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;              // Used to identify the different players.
+    public int m_PlayerNumber = 2;              // Used to identify the different players.
     public float m_TopSpeed;
     public float m_BarrierCooldown;
     public Slider m_CooldownSlider;

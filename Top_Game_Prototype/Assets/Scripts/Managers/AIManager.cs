@@ -96,7 +96,7 @@ public class AIManager : MonoBehaviour
                 break;
             case StateMachine.STUN:
                 break;
-           /* case StateMachine.BARRIER:
+           case StateMachine.BARRIER:
                 Vector3 Barriermovement = new Vector3(moveHorizontal, 0.0f, moveVertical);
                 if (rb.velocity.magnitude > 15)
                 {
@@ -112,7 +112,7 @@ public class AIManager : MonoBehaviour
                 break;
             case StateMachine.RUSH:
                 SlowDownVelocity();
-                break;*/
+                break;
         }
     }
     private void RotateDirectionVelocity()
