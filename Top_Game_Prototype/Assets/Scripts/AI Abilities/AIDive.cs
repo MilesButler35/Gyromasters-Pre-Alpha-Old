@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/*TODO: Check for any differences in code between this script 
+ *      and the player version. Edit this script to match the
+ *      player implentation but with AI control.
+*/
 
 public class AIDive : MonoBehaviour
 {
@@ -131,7 +135,6 @@ public class AIDive : MonoBehaviour
         hcol.m_MaxDamage = m_MaxDamage;
         hcol.m_HitStun = m_HitStun;
         hcol.m_ExplosionForce = m_ExplosionForce;
-        //bcol.m_MaxLifeTime = m_MaxLifeTime;
         hcol.m_ExplosionRadius = m_ExplosionRadius;
         hcol.m_OwnerRigidbody = gameObject.GetComponent<Rigidbody>();
     }

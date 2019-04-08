@@ -233,7 +233,13 @@ public class SelectScreenManager : MonoBehaviour
                         charManager.returnCharacterWithID(potraitList[ranValue].characterId).prefab;
 
                     charManager.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanBarrier>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanDive>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanRush>().enabled = false;
                     charManager.players[i].playerPrefab.GetComponent<AIManager>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIBarrier>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIDive>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIRush>().enabled = true;
 
                     Debug.Log(potraitList[ranValue].characterId);
                 }

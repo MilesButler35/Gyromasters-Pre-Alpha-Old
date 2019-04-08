@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/*TODO: Check for any differences in code between this script 
+ *      and the player version. Edit this script to match the
+ *      player implentation but with AI control.
+*/
 
 public class AIRush : MonoBehaviour
 {
@@ -131,6 +135,15 @@ public class AIRush : MonoBehaviour
 
     }
 
+    private void HoldButton()
+    {
+        //TODO: flag to signal button that activates skill is being held down
+    }
+
+    private void ReleaseButton()
+    {
+        //TODO: flag to trigger Release of button that activates skill
+    }
 
     private void Rush()
     {

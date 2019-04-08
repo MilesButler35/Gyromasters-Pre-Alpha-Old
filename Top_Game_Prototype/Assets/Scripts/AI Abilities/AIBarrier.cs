@@ -2,6 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/*TODO: Check for any differences in code between this script 
+ *      and the player version. Edit this script to match the
+ *      player implentation but with AI control.
+*/
 
 public class AIBarrier : MonoBehaviour
 {
@@ -61,6 +65,11 @@ public class AIBarrier : MonoBehaviour
                 resetStateTimer = m_TimeInState;
             }
         }
+
+        /*TODO: Input.GetButton() activates this skill
+         *      Switch Input.GetButton() with some other boolean flag
+         *      This can be done inside this script or in the AI manager             
+        */      
         if (Input.GetButton(m_BarrierButton) && Time.time > nextBarrier)
         {
             //If the player used the skill, reset the timer to a new point in the future
