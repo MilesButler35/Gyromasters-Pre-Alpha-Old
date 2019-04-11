@@ -243,6 +243,19 @@ public class SelectScreenManager : MonoBehaviour
 
                     Debug.Log(potraitList[ranValue].characterId);
                 }
+
+            }
+            else
+            {
+
+                charManager.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = true;
+                charManager.players[i].playerPrefab.GetComponent<TopmanBarrier>().enabled = true;
+                charManager.players[i].playerPrefab.GetComponent<TopmanDive>().enabled = true;
+                charManager.players[i].playerPrefab.GetComponent<TopmanRush>().enabled = true;
+                charManager.players[i].playerPrefab.GetComponent<AIManager>().enabled = false;
+                charManager.players[i].playerPrefab.GetComponent<AIBarrier>().enabled = false;
+                charManager.players[i].playerPrefab.GetComponent<AIDive>().enabled = false;
+                charManager.players[i].playerPrefab.GetComponent<AIRush>().enabled = false;
             }
         }
 
