@@ -21,6 +21,7 @@ public class AIManager : MonoBehaviour
     private string v_MovementAxisName;
     private float choice;
     public Vector3 moveDirection;
+    
 
     public enum StateMachine { MOVE, STUN, BARRIER, DIVE, RUSH }
 
