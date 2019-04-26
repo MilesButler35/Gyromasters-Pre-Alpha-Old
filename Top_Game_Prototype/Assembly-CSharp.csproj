@@ -178,6 +178,7 @@
     <Compile Include="Assets\Scripts\Players\HandleMovement.cs" />
     <Compile Include="Assets\Scripts\Players\InputHandler.cs" />
     <Compile Include="Assets\Scripts\Players\StateManager.cs" />
+    <Compile Include="Assets\Scripts\StageSelectManager.cs" />
     <Compile Include="Assets\Scripts\Topman\DiveTargetController.cs" />
     <Compile Include="Assets\Scripts\Topman\RestartGame.cs" />
     <Compile Include="Assets\Scripts\Topman\TopmanAnim.cs" />
