@@ -268,7 +268,7 @@ public class SelectScreenManager : MonoBehaviour
         }
         else
         {
-            MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "Test-Scene");
+            MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "Loading");
         }
 
     }

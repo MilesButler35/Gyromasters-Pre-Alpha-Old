@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-m_EditorVersion: 2018.2.8f1
-=======
-m_EditorVersion: 2018.2.0f2
->>>>>>> Menu and Arcade mode WIP
+m_EditorVersion: 2018.3.3f1
