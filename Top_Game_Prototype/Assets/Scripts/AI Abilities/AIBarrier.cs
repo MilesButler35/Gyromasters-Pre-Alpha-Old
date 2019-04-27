@@ -12,11 +12,12 @@ public class AIBarrier : MonoBehaviour
     public int m_PlayerNumber = 2;              // Used to identify the different players.
     public float m_TopSpeed;
     public float m_BarrierCooldown;
+    public AudioSource m_BarrierAudio;
+    public AudioClip m_ActivationClip;
     public Slider m_CooldownSlider;
     public float m_TimeInState = 1.5f;
     public LayerMask m_TankMask;
     public ParticleSystem m_ExplosionParticles;
-    public AudioSource m_ExplosionAudio;
     public float m_MaxDamage = 100f;
     public float m_ChargeVelocitySlowdownRate = 0.90f;
     public float m_ExplosionForce = 1000f;
@@ -24,12 +25,11 @@ public class AIBarrier : MonoBehaviour
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
 
-    private string m_BarrierButton;             // The input axis that is used for launching shells.
     private float nextBarrier;
     private float resetStateTimer;
     private AIManager playerController;
     private GameObject hitbox;
-
+    private float rand = 1;
 
     private void OnEnable()
     {
@@ -41,7 +41,6 @@ public class AIBarrier : MonoBehaviour
     {
 
         // The fire axis is based on the player number.
-        m_BarrierButton = "Barrier" + m_PlayerNumber;
         playerController = gameObject.GetComponent<AIManager>();
         resetStateTimer = m_TimeInState;
         m_CooldownSlider.maxValue = m_BarrierCooldown;
@@ -52,6 +51,7 @@ public class AIBarrier : MonoBehaviour
     private void Update()
     {
 
+        rand = Random.Range(1, 100);
         if (playerController.currentState != AIManager.StateMachine.BARRIER && hitbox != null)
         {
             Destroy(hitbox);
@@ -70,7 +70,7 @@ public class AIBarrier : MonoBehaviour
          *      Switch Input.GetButton() with some other boolean flag
          *      This can be done inside this script or in the AI manager             
         */      
-        if (Input.GetButton(m_BarrierButton) && Time.time > nextBarrier)
+        if (playerController.dist <= 2f && Time.time > nextBarrier && rand <= 35)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextBarrier = Time.time + m_BarrierCooldown;
@@ -85,12 +85,13 @@ public class AIBarrier : MonoBehaviour
             CreateHitBox();
 
             //Particles and Audio
+            m_BarrierAudio.clip = m_ActivationClip;
+            m_BarrierAudio.Play();
 
             //m_ExplosionParticles.transform.parent = null;
 
             m_ExplosionParticles.Play();
 
-            m_ExplosionAudio.Play();
 
             //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
         }
@@ -100,6 +101,7 @@ public class AIBarrier : MonoBehaviour
             SetCooldownUI();
         }
 
+        rand = Random.Range(0, 100);
     }
 
     private void CreateHitBox()

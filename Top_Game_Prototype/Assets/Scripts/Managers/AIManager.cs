@@ -21,6 +21,7 @@ public class AIManager : MonoBehaviour
     private string v_MovementAxisName;
     private float choice;
     public Vector3 moveDirection;
+    public float dist;
     
 
     public enum StateMachine { MOVE, STUN, BARRIER, DIVE, RUSH }
@@ -49,6 +50,8 @@ public class AIManager : MonoBehaviour
         Player1 = GameObject.Find("Player1");
         h_MovementAxisName = "Horizontal" + m_PlayerNumber;
         v_MovementAxisName = "Vertical" + m_PlayerNumber;
+
+
     }
 
 	// Update is called once per frame
@@ -62,6 +65,7 @@ public class AIManager : MonoBehaviour
         Player1 = GameObject.Find("Player1");
         playerPos = Player1.transform.position;
         selfPos = self.transform.position;
+        dist = Vector3.Distance(playerPos, selfPos);
         switch (currentState)
         {
             case StateMachine.MOVE:
