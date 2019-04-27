@@ -1,4 +1,4 @@
 sceneSetups:
-- path: C:/Users/Miles Butler/Documents/GitHub/Tank-Game/Assets/Scenes/StageSelect.unity
+- path: Assets/Scenes/TitleMenu.unity
   isLoaded: 1
   isActive: 1
