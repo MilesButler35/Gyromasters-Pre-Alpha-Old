@@ -14,8 +14,10 @@ public class AIDive : MonoBehaviour
     public float m_DiveCooldown;
     public float m_TimeBeforeLanding = 1.5f;        // 
     public LayerMask m_TankMask;
+    public AudioSource m_DiveAudio;
+    public AudioClip m_JumpClip;                // Audio clip for start of jump
+    public AudioClip m_CrashClip;               // Audio clip for landing
     public ParticleSystem m_ExplosionParticles;
-    public AudioSource m_ExplosionAudio;
     public float m_MaxDamage = 100f;
     public float m_ChargeVelocitySlowdownRate = 0.90f;
     public float m_ExplosionForce = 1000f;
@@ -23,14 +25,25 @@ public class AIDive : MonoBehaviour
     public float m_HitStun = 2f;
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
+    public GameObject m_CrashPrefab;
 
+
+    private ParticleSystem m_LandParticles;
     private GameObject m_DiveTarget;
     private Rigidbody rb;
-    private bool landed;               
+    private bool landed;
+    private string m_DiveButton;                // The input axis that is used for dive attack.
     private float nextDive;
     private float resetStateTimer;
     private AIManager playerController;
+    private float rand;
     private bool pressed;
+
+    private void Awake()
+    {
+        m_LandParticles = Instantiate(m_CrashPrefab).GetComponent<ParticleSystem>();
+        m_LandParticles.gameObject.SetActive(false);
+    }
 
     private void OnEnable()
     {
@@ -60,6 +73,7 @@ public class AIDive : MonoBehaviour
             m_DiveAnim.Jump(false);
             m_DiveAnim.IsChargingDive(false);
 
+
         }
         if (playerController.currentState == AIManager.StateMachine.DIVE && m_DiveTarget != null)
         {
@@ -84,7 +98,7 @@ public class AIDive : MonoBehaviour
                 rb.detectCollisions = false;
             }
         }
-        if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE)
+        if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE && playerController.dist > 25 && )
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
@@ -135,13 +149,15 @@ public class AIDive : MonoBehaviour
         hcol.m_MaxDamage = m_MaxDamage;
         hcol.m_HitStun = m_HitStun;
         hcol.m_ExplosionForce = m_ExplosionForce;
+        //bcol.m_MaxLifeTime = m_MaxLifeTime;
         hcol.m_ExplosionRadius = m_ExplosionRadius;
         hcol.m_OwnerRigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
     public void MoveToTarget()
     {
-        rb.position = m_DiveTarget.transform.position;
+        if (m_DiveTarget != null)   
+            rb.position = m_DiveTarget.transform.position;
     }
 
     private void SetCooldownUI()
@@ -169,10 +185,15 @@ public class AIDive : MonoBehaviour
 
         //m_ExplosionParticles.transform.parent = null;
 
-        m_ExplosionParticles.Play();
+        // Particles and audio for landing
+        m_DiveAudio.clip = m_CrashClip;
+        m_DiveAudio.Play();
 
-        m_ExplosionAudio.Play();
+        m_LandParticles.transform.position = m_DiveTarget.transform.position;
+        m_LandParticles.gameObject.SetActive(true);
+        m_LandParticles.Play();
 
         //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
     }
 }
+

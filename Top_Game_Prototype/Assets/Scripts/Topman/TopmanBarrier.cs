@@ -84,6 +84,7 @@ public class TopmanBarrier : MonoBehaviour
             m_ExplosionParticles.Play();
 
             //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
+           
         }
 
         if (nextBarrier - Time.time >= 0)

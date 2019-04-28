@@ -24,13 +24,14 @@ public class AIBarrier : MonoBehaviour
     public float m_HitStun = 2f;
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
+    public float defenseChance = 35;
 
     private float nextBarrier;
     private float resetStateTimer;
     private AIManager playerController;
     private GameObject hitbox;
-    private float rand = 1;
-
+    private float rand;
+    
     private void OnEnable()
     {
 
@@ -43,15 +44,19 @@ public class AIBarrier : MonoBehaviour
         // The fire axis is based on the player number.
         playerController = gameObject.GetComponent<AIManager>();
         resetStateTimer = m_TimeInState;
-        m_CooldownSlider.maxValue = m_BarrierCooldown;
+       // m_CooldownSlider.maxValue = m_BarrierCooldown;
 
     }
 
 
     private void Update()
     {
-
-        rand = Random.Range(1, 100);
+        if (playerController.dist < 15)
+        {
+            rand = Random.Range(1, 100);
+        }
+       
+        Debug.Log("Random Number = " + rand);
         if (playerController.currentState != AIManager.StateMachine.BARRIER && hitbox != null)
         {
             Destroy(hitbox);
@@ -70,12 +75,12 @@ public class AIBarrier : MonoBehaviour
          *      Switch Input.GetButton() with some other boolean flag
          *      This can be done inside this script or in the AI manager             
         */      
-        if (playerController.dist <= 2f && Time.time > nextBarrier && rand <= 35)
+        if ( playerController.dist <= 10 && Time.time > nextBarrier && rand <= defenseChance)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextBarrier = Time.time + m_BarrierCooldown;
 
-            m_CooldownSlider.interactable = false;
+           // m_CooldownSlider.interactable = false;
 
             playerController.currentState = AIManager.StateMachine.BARRIER;
 
@@ -94,6 +99,7 @@ public class AIBarrier : MonoBehaviour
 
 
             //Destroy (m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
+           
         }
 
         if (nextBarrier - Time.time >= 0)
@@ -129,9 +135,9 @@ public class AIBarrier : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
-            m_CooldownSlider.interactable = true;
+           // m_CooldownSlider.interactable = true;
         }
         // Adjust the value and colour of the slider.
-        m_CooldownSlider.value = cooldownTime;
+       // m_CooldownSlider.value = cooldownTime;
     }
 }

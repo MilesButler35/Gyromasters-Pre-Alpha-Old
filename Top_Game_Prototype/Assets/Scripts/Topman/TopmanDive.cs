@@ -50,7 +50,7 @@ public class TopmanDive : MonoBehaviour
 		m_DiveButton = "Dive" + m_PlayerNumber;
 		playerController = gameObject.GetComponent<TopmanPlayerController> ();
 		resetStateTimer = m_TimeBeforeLanding;
-		rb = gameObject.GetComponent<Rigidbody> ();
+		rb = gameObject.GetComponent<Rigidbody>();
         m_CooldownSlider.maxValue = m_DiveCooldown;
 
 	}

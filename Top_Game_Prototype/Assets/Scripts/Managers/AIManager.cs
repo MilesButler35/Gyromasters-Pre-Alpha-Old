@@ -66,6 +66,7 @@ public class AIManager : MonoBehaviour
         playerPos = Player1.transform.position;
         selfPos = self.transform.position;
         dist = Vector3.Distance(playerPos, selfPos);
+        
         switch (currentState)
         {
             case StateMachine.MOVE:
