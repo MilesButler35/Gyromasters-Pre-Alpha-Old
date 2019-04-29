@@ -26,6 +26,7 @@ public class AIDive : MonoBehaviour
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
     public GameObject m_CrashPrefab;
+    public int jumpChance = 20;
 
 
     private ParticleSystem m_LandParticles;
@@ -64,7 +65,10 @@ public class AIDive : MonoBehaviour
 
     private void Update()
     {
-
+        if (playerController.dist > 25)
+        {
+            rand = Random.Range(1, 100);
+        }
 
         if (playerController.currentState != AIManager.StateMachine.DIVE && m_DiveTarget != null)
         {
@@ -98,7 +102,7 @@ public class AIDive : MonoBehaviour
                 rb.detectCollisions = false;
             }
         }
-        if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE && playerController.dist > 25 && )
+        if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE && playerController.dist > 25 && rand > jumpChance)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
