@@ -21,6 +21,7 @@ public class AIRush : MonoBehaviour
     public float m_MaxLaunchForce = 3000;
     public float m_TimeInState;                 // Amount of time (in seconds) before finishing skill
     public float m_MaxChargeTime = 0.75f;       // How long (in seconds) the skill can charge for before it is fired at max force.
+    public int attackChance;
 
     private Rigidbody rb;
     private float moveHorizontal;
@@ -35,6 +36,7 @@ public class AIRush : MonoBehaviour
     private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
     private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
     private bool pressed;
+    private float rand;
 
 
     private void OnEnable()
@@ -52,7 +54,7 @@ public class AIRush : MonoBehaviour
         ResetStateTimer = m_TimeInState;
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         m_AimSlider.value = 0f; //m_MinLaunchForce
-        m_CooldownSlider.maxValue = m_RushCooldown;
+       // m_CooldownSlider.maxValue = m_RushCooldown;
         m_CurrentLaunchForce = m_MinLaunchForce;
         pressed = true;
     }
@@ -60,72 +62,77 @@ public class AIRush : MonoBehaviour
 
     private void Update()
     {
+        if (playerController.dist < 17 && playerController.dist > 10)
+        {
+            rand = Random.Range(1, 100);
+        }
         m_AimSlider.value = 0f; //m_MinLaunchForce
         moveHorizontal = playerController.playerPos.x; //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
         moveVertical = playerController.playerPos.y; //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
-
-        //If interrupted by an attack start cooldown timer
-        if (playerController.currentState == AIManager.StateMachine.STUN && m_CurrentLaunchForce > m_MinLaunchForce)
+        if (playerController.dist < 17 && playerController.dist > 10 && rand <= attackChance && playerController.currentState == AIManager.StateMachine.MOVE)
         {
-            m_CurrentLaunchForce = m_MinLaunchForce;
-            nextRush = Time.time + m_RushCooldown;
-            playerController.slowdownRate = 1f;
-            m_Fired = true;
-        }
-        // If the max force has been exceeded and the shell hasn't yet been launched...
-        else if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
-        {
-            nextRush = Time.time + m_RushCooldown;
-            playerController.slowdownRate = 1f;
-            // ... use the max force and launch the shell.
-            m_CurrentLaunchForce = m_MaxLaunchForce;
-            Rush();
-        }
-        // Otherwise, if the fire button has been released and the shell has been launched...
-        else if (playerController.currentState == AIManager.StateMachine.RUSH && m_Fired)
-        {
-            // Decrement timer to reset state back to neutral
-            ResetStateTimer -= Time.deltaTime;
-            playerController.slowdownRate = 0.90f;
-            if (ResetStateTimer <= 0)
+            //If interrupted by an attack start cooldown timer
+            if (playerController.currentState == AIManager.StateMachine.STUN && m_CurrentLaunchForce > m_MinLaunchForce)
             {
-                playerController.currentState = AIManager.StateMachine.MOVE;
-                ResetStateTimer = m_TimeInState;
+                m_CurrentLaunchForce = m_MinLaunchForce;
+                nextRush = Time.time + m_RushCooldown;
+                playerController.slowdownRate = 1f;
+                m_Fired = true;
+            }
+            // If the max force has been exceeded and the shell hasn't yet been launched...
+            else if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+            {
+                nextRush = Time.time + m_RushCooldown;
+                playerController.slowdownRate = 1f;
+                // ... use the max force and launch the shell.
+                m_CurrentLaunchForce = m_MaxLaunchForce;
+                Rush();
+            }
+            // Otherwise, if the fire button has been released and the shell has been launched...
+            else if (playerController.currentState == AIManager.StateMachine.RUSH && m_Fired)
+            {
+                // Decrement timer to reset state back to neutral
+                ResetStateTimer -= Time.deltaTime;
+                playerController.slowdownRate = 0.90f;
+                if (ResetStateTimer <= 0)
+                {
+                    playerController.currentState = AIManager.StateMachine.MOVE;
+                    ResetStateTimer = m_TimeInState;
+                }
+            }
+
+            // Otherwise, if the fire button has just started being pressed...
+            else if (pressed && Time.time > nextRush && (moveHorizontal != 0 || moveVertical != 0) && playerController.currentState == AIManager.StateMachine.MOVE)
+            {
+                // ... reset the fired flag and reset the launch force.
+                m_Fired = false;
+                m_CurrentLaunchForce = m_MinLaunchForce;
+                playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
+                playerController.currentState = AIManager.StateMachine.RUSH;
+                // Change the clip to the charging clip and start it playing.
+                //m_ShootingAudio.clip = m_ChargingClip;
+                //m_ShootingAudio.Play();
+            }
+
+            // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
+            else if (pressed && !m_Fired)
+            {
+                // Increment the launch force and update the slider.
+                m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
+
+                m_AimSlider.value = m_CurrentLaunchForce / m_MaxLaunchForce;
+            }
+
+            // Otherwise, if the fire button is released and the shell hasn't been launched yet...
+            else if (pressed && !m_Fired)
+            {
+                nextRush = Time.time + m_RushCooldown;
+                playerController.slowdownRate = 1f;
+                // ... launch the shell.
+                Rush();
             }
         }
-
-        // Otherwise, if the fire button has just started being pressed...
-        else if (pressed && Time.time > nextRush && (moveHorizontal != 0 || moveVertical != 0) && playerController.currentState == AIManager.StateMachine.MOVE)
-        {
-            // ... reset the fired flag and reset the launch force.
-            m_Fired = false;
-            m_CurrentLaunchForce = m_MinLaunchForce;
-            playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
-            playerController.currentState = AIManager.StateMachine.RUSH;
-            // Change the clip to the charging clip and start it playing.
-            //m_ShootingAudio.clip = m_ChargingClip;
-            //m_ShootingAudio.Play();
-        }
-
-        // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
-        else if (pressed && !m_Fired)
-        {
-            // Increment the launch force and update the slider.
-            m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
-
-            m_AimSlider.value = m_CurrentLaunchForce / m_MaxLaunchForce;
-        }
-
-        // Otherwise, if the fire button is released and the shell hasn't been launched yet...
-        else if (pressed && !m_Fired)
-        {
-            nextRush = Time.time + m_RushCooldown;
-            playerController.slowdownRate = 1f;
-            // ... launch the shell.
-            Rush();
-        }
-
         if (nextRush - Time.time >= 0)
         {
             SetCooldownUI();
@@ -149,7 +156,7 @@ public class AIRush : MonoBehaviour
     {
         m_Fired = true;
 
-        m_CooldownSlider.interactable = false;
+        //m_CooldownSlider.interactable = false;
 
         rb.velocity = new Vector3(0, 0, 0);
 
@@ -165,7 +172,7 @@ public class AIRush : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
-            m_CooldownSlider.interactable = true;
+           // m_CooldownSlider.interactable = true;
         }
         m_CooldownSlider.value = Mathf.Clamp(cooldownTime, 0f, cooldownTime);
     }

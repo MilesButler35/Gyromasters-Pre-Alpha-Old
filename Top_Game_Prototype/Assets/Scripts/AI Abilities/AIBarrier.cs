@@ -24,7 +24,7 @@ public class AIBarrier : MonoBehaviour
     public float m_HitStun = 2f;
     public float m_ExplosionRadius = 5f;
     public GameObject m_HitBox;
-    public float defenseChance = 35;
+    public float defenseChance;
 
     private float nextBarrier;
     private float resetStateTimer;
@@ -75,7 +75,7 @@ public class AIBarrier : MonoBehaviour
          *      Switch Input.GetButton() with some other boolean flag
          *      This can be done inside this script or in the AI manager             
         */      
-        if ( playerController.dist <= 10 && Time.time > nextBarrier && rand <= defenseChance)
+        if ( playerController.dist <= 10 && Time.time > nextBarrier && rand <= defenseChance && playerController.currentState == AIManager.StateMachine.MOVE )
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextBarrier = Time.time + m_BarrierCooldown;
