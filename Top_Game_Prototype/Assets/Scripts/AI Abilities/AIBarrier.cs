@@ -44,7 +44,7 @@ public class AIBarrier : MonoBehaviour
         // The fire axis is based on the player number.
         playerController = gameObject.GetComponent<AIManager>();
         resetStateTimer = m_TimeInState;
-       // m_CooldownSlider.maxValue = m_BarrierCooldown;
+        m_CooldownSlider.maxValue = m_BarrierCooldown;
 
     }
 
@@ -80,7 +80,7 @@ public class AIBarrier : MonoBehaviour
             //If the player used the skill, reset the timer to a new point in the future
             nextBarrier = Time.time + m_BarrierCooldown;
 
-           // m_CooldownSlider.interactable = false;
+            m_CooldownSlider.interactable = false;
 
             playerController.currentState = AIManager.StateMachine.BARRIER;
 
@@ -135,9 +135,9 @@ public class AIBarrier : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
-           // m_CooldownSlider.interactable = true;
+           m_CooldownSlider.interactable = true;
         }
         // Adjust the value and colour of the slider.
-       // m_CooldownSlider.value = cooldownTime;
+        m_CooldownSlider.value = cooldownTime;
     }
 }

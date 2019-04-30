@@ -59,7 +59,7 @@ public class AIDive : MonoBehaviour
         playerController = gameObject.GetComponent<AIManager>();
         resetStateTimer = m_TimeBeforeLanding;
         rb = gameObject.GetComponent<Rigidbody>();
-       // m_CooldownSlider.maxValue = m_DiveCooldown;
+        m_CooldownSlider.maxValue = m_DiveCooldown;
 
     }
 
@@ -111,7 +111,7 @@ public class AIDive : MonoBehaviour
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
 
-            //m_CooldownSlider.interactable = false;
+            m_CooldownSlider.interactable = false;
 
             playerController.currentState = AIManager.StateMachine.DIVE;
 
@@ -174,10 +174,10 @@ public class AIDive : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
-            //m_CooldownSlider.interactable = true;
+            m_CooldownSlider.interactable = true;
         }
         // Adjust the value and colour of the slider.
-       // m_CooldownSlider.value = cooldownTime;
+        m_CooldownSlider.value = cooldownTime;
     }
 
     public void OnGround()

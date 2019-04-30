@@ -143,6 +143,13 @@ public class LevelManager : MonoBehaviour {
                 go.GetComponent<TopmanRush>().m_CooldownSlider = p2RSlider;
                 go.GetComponent<TopmanDive>().m_PlayerNumber = 2;
                 go.GetComponent<TopmanDive>().m_CooldownSlider = p2DSlider;
+                go.GetComponent<AIManager>().m_PlayerNumber = 2;
+                go.GetComponent<AIBarrier>().m_PlayerNumber = 2;
+                go.GetComponent<AIBarrier>().m_CooldownSlider = p2BSlider;
+                go.GetComponent<AIRush>().m_PlayerNumber = 2;
+                go.GetComponent<AIRush>().m_CooldownSlider = p2RSlider;
+                go.GetComponent<AIDive>().m_PlayerNumber = 2;
+                go.GetComponent<AIDive>().m_CooldownSlider = p2DSlider;
             }
 
             //and assign the needed references

@@ -54,7 +54,7 @@ public class AIRush : MonoBehaviour
         ResetStateTimer = m_TimeInState;
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         m_AimSlider.value = 0f; //m_MinLaunchForce
-       // m_CooldownSlider.maxValue = m_RushCooldown;
+       m_CooldownSlider.maxValue = m_RushCooldown;
         m_CurrentLaunchForce = m_MinLaunchForce;
         pressed = true;
     }
@@ -156,7 +156,7 @@ public class AIRush : MonoBehaviour
     {
         m_Fired = true;
 
-        //m_CooldownSlider.interactable = false;
+        m_CooldownSlider.interactable = false;
 
         rb.velocity = new Vector3(0, 0, 0);
 
@@ -172,7 +172,7 @@ public class AIRush : MonoBehaviour
         if (cooldownTime < 0.02f)
         {
             cooldownTime = 0f;
-           // m_CooldownSlider.interactable = true;
+           m_CooldownSlider.interactable = true;
         }
         m_CooldownSlider.value = Mathf.Clamp(cooldownTime, 0f, cooldownTime);
     }
