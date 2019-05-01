@@ -12,6 +12,7 @@ public class MySceneManager : MonoBehaviour {
     bool waitToLoad;
     public int progIndex;
     public List<SoloProgression> progression = new List<SoloProgression>();
+    public int progressionBase;
 
     CharacterManager chm;
 
@@ -30,22 +31,28 @@ public class MySceneManager : MonoBehaviour {
         int playerInt = chm.ReturnCharacterInt(chm.players[0].playerPrefab);
         usedCharacters.Add(playerInt);
 
-        if(progressionStages > chm.characterList.Count-1)
+        if (progressionStages > chm.characterList.Count - 1)
         {
             progressionStages = chm.characterList.Count - 2;
         }
-
-        for (int i = 0; i < progressionStages; i++)
+        if (progressionBase != progressionStages)
         {
-            SoloProgression s = new SoloProgression();
+            for (progressionBase = 0; progressionBase < progressionStages; progressionBase++)
+            {
+                SoloProgression s = new SoloProgression();
 
-            int levelInt = Random.Range(0, levels.Count);
-            s.levelID = levels[levelInt];
+                int levelInt = Random.Range(0, levels.Count);
+                s.levelID = levels[levelInt];
 
-            int charInt = UniqueRandomInt(usedCharacters, 0, chm.characterList.Count);
-            s.charId = chm.characterList[charInt].charId;
-            usedCharacters.Add(charInt);
-            progression.Add(s);
+                int charInt = UniqueRandomInt(usedCharacters, 0, chm.characterList.Count);
+                s.charId = chm.characterList[charInt].charId;
+                usedCharacters.Add(charInt);
+                progression.Add(s);
+            }
+        }
+        else
+        {
+            RequestLevelLoad(SceneType.prog, "WinScreen");
         }
     }
 

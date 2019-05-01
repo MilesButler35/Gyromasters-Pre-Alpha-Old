@@ -3,30 +3,41 @@ using UnityEditor.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
+    private MySceneManager sceneManager;
+
+    private void Start()
+    {
+        sceneManager = gameObject.GetComponent<MySceneManager>();
+    }
     public void Update()
     {
         if (Input.GetButton("Submit"))
         {
-            restart();
+            select();
+            
+
         }
 
         else if (Input.GetButton("Cancel"))
         {
-            select();
+            title();
         }
     }
 
-    public void restart()
+  /*  public void restart()
     {
         EditorSceneManager.LoadScene(3);
-    }
+        sceneManager.progressionBase = 0;
+    }*/
     public void select()
     {
-        EditorSceneManager.LoadScene(1);
+        EditorSceneManager.LoadScene(2);
+        sceneManager.progressionBase = 0;
     }
     public void title()
     {
         EditorSceneManager.LoadScene(0);
+        sceneManager.progressionBase = 0;
     }
 }
 
