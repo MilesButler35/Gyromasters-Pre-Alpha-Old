@@ -25,6 +25,7 @@ public class MySceneManager : MonoBehaviour {
     {
         progression.Clear();
         progIndex = 0;
+        progressionBase = 0;
 
         List<int> usedCharacters = new List<int>();
 
@@ -35,9 +36,8 @@ public class MySceneManager : MonoBehaviour {
         {
             progressionStages = chm.characterList.Count - 2;
         }
-        if (progressionBase != progressionStages)
-        {
-            for (progressionBase = 0; progressionBase < progressionStages; progressionBase++)
+       
+            for (int i = 0; i < progressionStages; i++)
             {
                 SoloProgression s = new SoloProgression();
 
@@ -49,11 +49,12 @@ public class MySceneManager : MonoBehaviour {
                 usedCharacters.Add(charInt);
                 progression.Add(s);
             }
-        }
-        else
+        
+      /*  if (progressionBase == 3)
         {
             RequestLevelLoad(SceneType.prog, "WinScreen");
-        }
+        }*/
+      
     }
 
     public void LoadNextOnProgression()
@@ -73,7 +74,8 @@ public class MySceneManager : MonoBehaviour {
             chm.players[1].playerPrefab = 
                 chm.returnCharacterWithID(progression[progIndex].charId).prefab;
             
-            progIndex++;         
+            progIndex++;
+            //progressionBase++;
         }
 
         RequestLevelLoad(sceneType, targetId);

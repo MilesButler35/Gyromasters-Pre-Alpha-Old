@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 681, y: 498}
   m_MaxSize: {x: 14004, y: 14048}
   vertical: 0
-  controlID: 3218
+  controlID: 614
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 498}
   m_MaxSize: {x: 10002, y: 14048}
   vertical: 1
-  controlID: 3172
+  controlID: 553
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 224}
   m_MaxSize: {x: 8004, y: 4024}
   vertical: 0
-  controlID: 3173
+  controlID: 554
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -381,9 +381,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 32080000
       m_LastClickedID: 0
-      m_ExpandedIDs: 38cbffff30eeffffcafbffff6e91000096910000
+      m_ExpandedIDs: 66fbffffd4fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -551,20 +551,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Miles Butler\Documents\GitHub\Top_Game_Prototype\Top_Game_Prototype
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 355}
-    m_SelectedIDs: d8300000
-    m_LastClickedID: 12504
-    m_ExpandedIDs: 0000000086280000c62800008c2900008e2900009e2a0000302b0000a82b00001c2d00004c2d0000522d0000282e0000642f0000c22f000002300000a63000001431000032310000ba31000096350000983500009a3500009c3500009e350000a0350000a2350000a4350000a635000000ca9a3b
+    scrollPos: {x: 0, y: 353}
+    m_SelectedIDs: 08150000
+    m_LastClickedID: 5384
+    m_ExpandedIDs: 00000000d40b0000140c0000da0c0000dc0c0000ec0d00007e0e0000f60e00006a1000009a100000a010000076110000b21200001013000050130000f413000062140000801400000815000090330000923300009433000096330000983300009a3300009c3300009e330000a033000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -592,7 +592,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000086280000c62800008c2900008e2900009e2a0000302b0000a82b00001c2d00004c2d0000522d0000282e0000642f0000c22f000002300000a63000001431000032310000ba31000096350000983500009a3500009c3500009e350000a0350000a2350000a4350000a635000000ca9a3b
+    m_ExpandedIDs: 00000000d40b0000140c0000da0c0000dc0c0000ec0d00007e0e0000f60e00006a1000009a100000a010000076110000b21200001013000050130000f413000062140000801400000815000090330000923300009433000096330000983300009a3300009c3300009e330000a033000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

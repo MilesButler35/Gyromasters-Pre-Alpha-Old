@@ -99,6 +99,7 @@
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\LoadingManager.cs" />
     <Compile Include="Assets\NewScene.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\PauseManager.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\SaveSettings.cs" />
