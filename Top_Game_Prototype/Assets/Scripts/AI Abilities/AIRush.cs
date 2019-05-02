@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class AIRush : MonoBehaviour
 {
-    public int m_PlayerNumber = 2;              // Used to identify the different players.
+    public int m_PlayerNumber = 1;              // Used to identify the different players.
     public Slider m_AimSlider;
-    public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
+    public AudioSource m_RushAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
     public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
     public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
     public float m_RushCooldown;
@@ -27,10 +27,9 @@ public class AIRush : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     private float ResetStateTimer;
-    private string h_MovementAxisName;
-    private string v_MovementAxisName;
     private string m_RushButton;                // The input axis that is used for launching the spinner forward.
     private float nextRush;
+
     private AIManager playerController;
     private float m_CurrentLaunchForce;         // The force that will be given to the shell when the fire button is released.
     private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
@@ -49,20 +48,21 @@ public class AIRush : MonoBehaviour
     {
 
         // The fire axis is based on the player number.
+
         rb = GetComponent<Rigidbody>();
         playerController = gameObject.GetComponent<AIManager>();
         ResetStateTimer = m_TimeInState;
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         m_AimSlider.value = 0f; //m_MinLaunchForce
-       m_CooldownSlider.maxValue = m_RushCooldown;
+        m_CooldownSlider.maxValue = m_RushCooldown;
         m_CurrentLaunchForce = m_MinLaunchForce;
-        pressed = true;
+        pressed = false;
     }
 
 
     private void Update()
     {
-        if (playerController.dist < 17 && playerController.dist > 10)
+        if (playerController.dist < 14 && playerController.dist > 8)
         {
             rand = Random.Range(1, 100);
         }
@@ -70,11 +70,14 @@ public class AIRush : MonoBehaviour
         moveHorizontal = playerController.playerPos.x; //Mathf.Round(Input.GetAxis (h_MovementAxisName)*4f)/4f;
         moveVertical = playerController.playerPos.y; //Mathf.Round(Input.GetAxis (v_MovementAxisName)*4f)/4f;
 
-        if (playerController.dist < 17 && playerController.dist > 10 && rand <= attackChance && playerController.currentState == AIManager.StateMachine.MOVE)
+        if (playerController.dist <= 14 && playerController.dist > 8 && rand <= attackChance && playerController.currentState == AIManager.StateMachine.MOVE && !m_Fired)
         {
+            pressed = true;
+        }
             //If interrupted by an attack start cooldown timer
             if (playerController.currentState == AIManager.StateMachine.STUN && m_CurrentLaunchForce > m_MinLaunchForce)
             {
+
                 m_CurrentLaunchForce = m_MinLaunchForce;
                 nextRush = Time.time + m_RushCooldown;
                 playerController.slowdownRate = 1f;
@@ -88,6 +91,10 @@ public class AIRush : MonoBehaviour
                 // ... use the max force and launch the shell.
                 m_CurrentLaunchForce = m_MaxLaunchForce;
                 Rush();
+                // Cut the charging clip and change it to firing.
+                m_RushAudio.Stop();
+                m_RushAudio.clip = m_FireClip;
+                m_RushAudio.Play();
             }
             // Otherwise, if the fire button has been released and the shell has been launched...
             else if (playerController.currentState == AIManager.StateMachine.RUSH && m_Fired)
@@ -111,18 +118,19 @@ public class AIRush : MonoBehaviour
                 playerController.slowdownRate = m_ChargeVelocitySlowdownRate;
                 playerController.currentState = AIManager.StateMachine.RUSH;
                 // Change the clip to the charging clip and start it playing.
-                //m_ShootingAudio.clip = m_ChargingClip;
-                //m_ShootingAudio.Play();
+               
+                m_RushAudio.clip = m_ChargingClip;
+                m_RushAudio.Play();
             }
 
             // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
             else if (pressed && !m_Fired)
             {
-                // Increment the launch force and update the slider.
-                m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
+            // Increment the launch force and update the slider.
+            m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
 
-                m_AimSlider.value = m_CurrentLaunchForce / m_MaxLaunchForce;
-            }
+            m_AimSlider.value = m_CurrentLaunchForce / m_MaxLaunchForce;
+        }
 
             // Otherwise, if the fire button is released and the shell hasn't been launched yet...
             else if (pressed && !m_Fired)
@@ -131,8 +139,14 @@ public class AIRush : MonoBehaviour
                 playerController.slowdownRate = 1f;
                 // ... launch the shell.
                 Rush();
+
+                // If the charging clip hasn't ended, cut it.
+                m_RushAudio.Stop();
+                // Change the clip to firing and play it.
+                m_RushAudio.clip = m_FireClip;
+                m_RushAudio.Play();
+            
             }
-        }
         if (nextRush - Time.time >= 0)
         {
             SetCooldownUI();
@@ -142,15 +156,7 @@ public class AIRush : MonoBehaviour
 
     }
 
-    private void HoldButton()
-    {
-        //TODO: flag to signal button that activates skill is being held down
-    }
 
-    private void ReleaseButton()
-    {
-        //TODO: flag to trigger Release of button that activates skill
-    }
 
     private void Rush()
     {
@@ -162,7 +168,9 @@ public class AIRush : MonoBehaviour
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        rb.AddForce(movement * m_CurrentLaunchForce);
+        rb.AddForce(rb.transform.forward * m_CurrentLaunchForce);
+
+        pressed = false;
     }
 
     private void SetCooldownUI()

@@ -19,18 +19,51 @@ public class LoadingManager : MonoBehaviour
 
     GameObject potraitPrefab;
 
-    private MySceneManager sceneManager;
+    MySceneManager sceneManager;
+
+    #region Singleton
+    public static LoadingManager instance;
+    public static LoadingManager GetInstance()
+    {
+        return instance;
+    }
+
+    void Awake()
+    {
+        instance = this;
+    }
+    #endregion
     private void Start()
     {
         charManager = CharacterManager.GetInstance();
         numberOfPlayers = charManager.numberOfUsers;
 
-        potraitPrefab = Resources.Load("potraitPrefab") as GameObject;
-     
+       
+        sceneManager = gameObject.GetComponent<MySceneManager>();
 
         charManager.solo = (numberOfPlayers == 1);
-        StartCoroutine("LoadLevel"); //and start the coroutine to load the level
+       
 
+    }
+
+    private void Update()
+    {
+         if(bothPlayersSelected)
+        {
+            Debug.Log("loading");
+            StartCoroutine("LoadLevel"); //and start the coroutine to load the level
+            loadLevel = true;
+            bothPlayersSelected = false;
+        }
+        else
+        {
+            if(charManager.players[0].hasCharacter 
+                && charManager.players[1].hasCharacter)
+            {
+                bothPlayersSelected = true;
+            }
+           
+        }
     }
     IEnumerator LoadLevel()
     {
@@ -78,21 +111,30 @@ public class LoadingManager : MonoBehaviour
 
         if (charManager.solo)
         {
-            sceneManager.progIndex++;
-            sceneManager.progressionBase++;
        
             MySceneManager.GetInstance().LoadNextOnProgression();
-            
         }
         else
         {
             MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "WinScreen");
         }
 
-        if (sceneManager.progressionBase == 2)
+
+        WinState();
+
+    }
+
+    public void WinState()
+    {
+        if (charManager.solo)
+        {
+            sceneManager.progIndex += 1;
+            sceneManager.progressionBase += 1;
+        }
+
+        if (sceneManager.progressionBase == 2 && charManager.solo)
         {
             MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "WinScreen");
         }
-
     }
 }

@@ -75,7 +75,7 @@ public class AIBarrier : MonoBehaviour
          *      Switch Input.GetButton() with some other boolean flag
          *      This can be done inside this script or in the AI manager             
         */      
-        if ( playerController.dist <= 10 && Time.time > nextBarrier && rand <= defenseChance && playerController.currentState == AIManager.StateMachine.MOVE )
+        if ( playerController.dist <= 8 && Time.time > nextBarrier && rand <= defenseChance && playerController.currentState == AIManager.StateMachine.MOVE )
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextBarrier = Time.time + m_BarrierCooldown;

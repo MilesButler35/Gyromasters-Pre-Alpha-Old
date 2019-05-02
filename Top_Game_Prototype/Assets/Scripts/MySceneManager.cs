@@ -10,9 +10,9 @@ public class MySceneManager : MonoBehaviour {
     public List<MainScenes> mainScenes = new List<MainScenes>();
 
     bool waitToLoad;
-    public int progIndex;
+    public int progIndex = 0;
     public List<SoloProgression> progression = new List<SoloProgression>();
-    public int progressionBase;
+    public int progressionBase = 0;
 
     CharacterManager chm;
 
@@ -75,7 +75,7 @@ public class MySceneManager : MonoBehaviour {
                 chm.returnCharacterWithID(progression[progIndex].charId).prefab;
             
             progIndex++;
-            //progressionBase++;
+           
         }
 
         RequestLevelLoad(sceneType, targetId);

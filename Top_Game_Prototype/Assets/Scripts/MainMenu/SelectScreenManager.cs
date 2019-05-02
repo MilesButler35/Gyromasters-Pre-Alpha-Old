@@ -248,6 +248,7 @@ public class SelectScreenManager : MonoBehaviour
             else
             {
 
+
                 charManager.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = true;
                 charManager.players[i].playerPrefab.GetComponent<TopmanBarrier>().enabled = true;
                 charManager.players[i].playerPrefab.GetComponent<TopmanDive>().enabled = true;

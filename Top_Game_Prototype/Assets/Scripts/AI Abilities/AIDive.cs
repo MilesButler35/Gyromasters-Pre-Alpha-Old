@@ -106,7 +106,7 @@ public class AIDive : MonoBehaviour
                 rb.detectCollisions = false;
             }
         }
-        if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE && playerController.dist >= 25 && playerController.dist <= 30 && rand < jumpChance)
+       /* if (pressed && Time.time > nextDive && playerController.currentState == AIManager.StateMachine.MOVE && playerController.dist >= 25 && playerController.dist <= 30 && rand < jumpChance)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;
@@ -123,7 +123,7 @@ public class AIDive : MonoBehaviour
             m_DiveTarget.transform.position = gameObject.transform.position;
             m_DiveTarget.GetComponent<DiveTargetController>().m_PlayerNumber = m_PlayerNumber;
             m_DiveTarget.GetComponent<DiveTargetController>().speed = m_TargetSpeed;
-        }
+        }*/
 
         if (nextDive - Time.time >= 0)
         {
