@@ -16,6 +16,11 @@ public class SelectScreenManager : MonoBehaviour
    
     bool loadLevel; //if we are loading the level  
     public bool bothPlayersSelected;
+    private bool progressionMade;
+    private int stepsToWin;
+    private bool stageSelected;
+    
+    
 
     CharacterManager charManager;
 
@@ -125,6 +130,8 @@ public class SelectScreenManager : MonoBehaviour
             StartCoroutine("LoadLevel"); //and start the coroutine to load the level
             loadLevel = true;
             bothPlayersSelected = false;
+            progressionMade = false;
+            
         }
         else
         {
@@ -264,12 +271,44 @@ public class SelectScreenManager : MonoBehaviour
 
         if (charManager.solo)
         {
-            MySceneManager.GetInstance().CreateProgression();
-            MySceneManager.GetInstance().LoadNextOnProgression();
+            if (progressionMade == true && stepsToWin >= 1)
+            {
+                stepsToWin = 0;
+
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
+            }
+            if (progressionMade == false && stepsToWin < 1)
+            {
+                MySceneManager.GetInstance().CreateProgression();
+                MySceneManager.GetInstance().LoadNextOnProgression();
+                progressionMade = true;
+                Debug.Log("ProgressionMade");
+                stepsToWin = 0;
+            }
+            else if (progressionMade == true && stepsToWin < 1)
+            {
+                MySceneManager.GetInstance().LoadNextOnProgression();
+                stepsToWin++;
+                Debug.Log("LoadNextScreen");
+                Debug.Log("Steps to Win =" + stepsToWin);
+            }
+
         }
         else
         {
-            MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "Loading");
+            if (stageSelected == false)
+            {
+                stageSelected = true;
+             
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "Loading");
+                
+            }
+            if (stageSelected == true)
+            {
+               
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
+               
+            }
         }
 
     }

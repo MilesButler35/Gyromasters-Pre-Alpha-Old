@@ -63,8 +63,14 @@ public class AIManager : MonoBehaviour
             currentState = StateMachine.BARRIER;
         }*/
         Player1 = GameObject.Find("Player1");
+        selfPos = self.transform.position;
+        if (playerPos == null)
+        {
+            playerPos = selfPos;
+        }
         playerPos = Player1.transform.position;
         selfPos = self.transform.position;
+
         dist = Vector3.Distance(playerPos, selfPos);
         
         switch (currentState)

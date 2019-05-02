@@ -35,6 +35,8 @@ public class LevelManager : MonoBehaviour {
     int currentTimer;
     float internalTimer;
 
+
+
     
 
 	void Start () {
@@ -346,11 +348,11 @@ public class LevelManager : MonoBehaviour {
                 if(vPlayer == charM.players[0])
                     MySceneManager.GetInstance().LoadNextOnProgression();
                 else
-                    MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "game_over");
+                    MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "GameOver");
             }
             else
             {
-                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "select");
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "CharacterSelect");
             }
         }
     }

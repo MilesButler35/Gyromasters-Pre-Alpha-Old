@@ -56,7 +56,6 @@ public class AIBarrier : MonoBehaviour
             rand = Random.Range(1, 100);
         }
        
-        Debug.Log("Random Number = " + rand);
         if (playerController.currentState != AIManager.StateMachine.BARRIER && hitbox != null)
         {
             Destroy(hitbox);
