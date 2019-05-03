@@ -345,14 +345,17 @@ public class LevelManager : MonoBehaviour {
 
             if (charM.solo)
             {
-                if(vPlayer == charM.players[0])
+                if (vPlayer == charM.players[0])
+                {
                     MySceneManager.GetInstance().LoadNextOnProgression();
-                else
+                    Debug.Log("GoToLoading");
+                }
+                else if (vPlayer == charM.players[1])
                     MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "GameOver");
             }
             else
             {
-                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "CharacterSelect");
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
             }
         }
     }

@@ -8,6 +8,7 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;                           //Store a reference to the Game Object PausePanel 
+    public GameObject howToPlayPanel;
 
     private GameObject activePanel;                         
     private MenuObject activePanelMenuObject;
@@ -78,4 +79,21 @@ public class ShowPanels : MonoBehaviour {
 		optionsTint.SetActive(false);
 
 	}
+
+    public void ShowHowToPlay()
+    {
+        howToPlayPanel.SetActive(true);
+        howToPlayPanel.SetActive(true);
+        menuPanel.SetActive(false);
+        SetSelection(howToPlayPanel);
+    }
+
+    //Call this function to deactivate and hide the Pause panel during game play
+    public void HideHowToPlay()
+    {
+        menuPanel.SetActive(true);
+        howToPlayPanel.SetActive(false);
+        optionsTint.SetActive(false);
+
+    }
 }

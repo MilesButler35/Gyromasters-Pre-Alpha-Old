@@ -252,6 +252,7 @@ namespace GreatArcStudios
         public static Terrain readSimpleTerrain;
 
         private SaveSettings saveSettings = new SaveSettings();
+        
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -422,9 +423,11 @@ namespace GreatArcStudios
         /// </summary>
         public void returnToMenu()
         {
-            Application.LoadLevel(mainMenu);
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "TitleMenu");
+            Time.timeScale = timeScale;
+            
         }
+
 
         // Update is called once per frame
         /// <summary>
