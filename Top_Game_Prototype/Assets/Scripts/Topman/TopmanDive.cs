@@ -94,7 +94,7 @@ public class TopmanDive : MonoBehaviour
                 rb.detectCollisions = false;
             }
         }
-        if (Input.GetButtonDown(m_DiveButton) && Time.time > nextDive && playerController.currentState == TopmanPlayerController.StateMachine.MOVE)
+        if (Input.GetButtonDown(m_DiveButton) && Time.time > nextDive && playerController.currentState == TopmanPlayerController.StateMachine.MOVE && playerController.currentState != TopmanPlayerController.StateMachine.RUSH && playerController.currentState != TopmanPlayerController.StateMachine.DIVE)
         {
             //If the player used the skill, reset the timer to a new point in the future
             nextDive = Time.time + m_DiveCooldown;

@@ -66,11 +66,13 @@ public class AIManager : MonoBehaviour
         selfPos = self.transform.position;
         if (playerPos == null)
         {
-            playerPos = selfPos;
+            playerPos = new Vector3(0,0,0);
         }
         playerPos = Player1.transform.position;
-        selfPos = self.transform.position;
-
+        if (playerPos == null)
+        {
+            playerPos = selfPos;
+        }
         dist = Vector3.Distance(playerPos, selfPos);
         
         switch (currentState)

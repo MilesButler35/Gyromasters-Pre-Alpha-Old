@@ -25,6 +25,7 @@ public class SelectScreenManager : MonoBehaviour
     CharacterManager charManager;
 
     GameObject potraitPrefab;
+    LevelManager levelManager;
 
     #region Singleton
     public static SelectScreenManager instance;
@@ -44,6 +45,7 @@ public class SelectScreenManager : MonoBehaviour
         //we start by getting the reference to the character manager
         charManager = CharacterManager.GetInstance();
         numberOfPlayers = charManager.numberOfUsers;
+        levelManager = LevelManager.GetInstance();
 
         potraitPrefab = Resources.Load("potraitPrefab") as GameObject;
         CreatePotraits();
@@ -247,7 +249,7 @@ public class SelectScreenManager : MonoBehaviour
                     charManager.players[i].playerPrefab.GetComponent<AIBarrier>().enabled = true;
                     charManager.players[i].playerPrefab.GetComponent<AIDive>().enabled = true;
                     charManager.players[i].playerPrefab.GetComponent<AIRush>().enabled = true;
-
+                    
                     Debug.Log(potraitList[ranValue].characterId);
                 }
 
@@ -265,6 +267,8 @@ public class SelectScreenManager : MonoBehaviour
                 charManager.players[i].playerPrefab.GetComponent<AIDive>().enabled = false;
                 charManager.players[i].playerPrefab.GetComponent<AIRush>().enabled = false;
             }
+
+            
         }
 
         yield return new WaitForSeconds(2);//after 2 seconds load the level
@@ -283,14 +287,11 @@ public class SelectScreenManager : MonoBehaviour
                 MySceneManager.GetInstance().LoadNextOnProgression();
                 progressionMade = true;
                 Debug.Log("ProgressionMade");
-                stepsToWin = 0;
+                
             }
-            else if (progressionMade == true && stepsToWin < 1)
+            else if (progressionMade == true )
             {
                 MySceneManager.GetInstance().LoadNextOnProgression();
-                stepsToWin++;
-                Debug.Log("LoadNextScreen");
-                Debug.Log("Steps to Win =" + stepsToWin);
             }
 
         }
@@ -312,6 +313,7 @@ public class SelectScreenManager : MonoBehaviour
         }
 
     }
+
 
     IEnumerator LoadLevelPrev()
     {

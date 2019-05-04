@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour {
     public Slider p2RSlider;
     public Slider p2DSlider;
     public Text p2Lives;
+    public bool controlEnabled;
 
     WaitForSeconds oneSec;//we will be using this a lot so we don't want to create a new one everytime, saves a few bytes this
     public Transform[] spawnPositions;// the positions characters will spawn on
@@ -50,6 +51,11 @@ public class LevelManager : MonoBehaviour {
 
         //levelUI.AnnouncerTextLine1.gameObject.SetActive(false);
         //levelUI.AnnouncerTextLine2.gameObject.SetActive(false);
+
+        //Turn off AI and Player Controls
+        controlEnabled = false;
+
+        
 
         StartCoroutine("StartGame");
        
@@ -90,7 +96,10 @@ public class LevelManager : MonoBehaviour {
         yield return CreatePlayers();
 
         //then initialize the turn
-        //yield return InitTurn();
+        yield return InitTurn();
+
+
+
     }
 	
     IEnumerator InitTurn()
@@ -100,6 +109,7 @@ public class LevelManager : MonoBehaviour {
         //disable the announcer texts first
         levelUI.AnnouncerTextLine1.gameObject.SetActive(false);
         levelUI.AnnouncerTextLine2.gameObject.SetActive(false);
+        levelUI.LevelTimer.gameObject.SetActive(false);
 
         //reset the timer
         currentTimer = maxTurnTimer;
@@ -184,46 +194,27 @@ public class LevelManager : MonoBehaviour {
     {
         //start with the announcer text
 
-        levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
-        levelUI.AnnouncerTextLine1.text = "Round " + currentTurn;
-        levelUI.AnnouncerTextLine1.color = Color.white;
-        yield return oneSec;
-        yield return oneSec;
+         /*levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
+         levelUI.AnnouncerTextLine1.text = "Round " + currentTurn;
+         levelUI.AnnouncerTextLine1.color = Color.white;
+         yield return oneSec;
+         yield return oneSec;
 
-        //change the UI text and color every second that passes
-        levelUI.AnnouncerTextLine1.text = "3";
-        levelUI.AnnouncerTextLine1.color = Color.green;
-        yield return oneSec;
-        levelUI.AnnouncerTextLine1.text = "2";
-        levelUI.AnnouncerTextLine1.color = Color.yellow;
-        yield return oneSec;
-        levelUI.AnnouncerTextLine1.text = "1";
-        levelUI.AnnouncerTextLine1.color = Color.red;
-        yield return oneSec;
-        levelUI.AnnouncerTextLine1.color = Color.red;
-        levelUI.AnnouncerTextLine1.text = "FIGHT!";
+         //change the UI text and color every second that passes
+         levelUI.AnnouncerTextLine1.text = "3";
+         levelUI.AnnouncerTextLine1.color = Color.green;
+         yield return oneSec;
+         levelUI.AnnouncerTextLine1.text = "2";
+         levelUI.AnnouncerTextLine1.color = Color.yellow;
+         yield return oneSec;
+         levelUI.AnnouncerTextLine1.text = "1";
+         levelUI.AnnouncerTextLine1.color = Color.red;
+         yield return oneSec;*/
+         levelUI.AnnouncerTextLine1.color = Color.red;
+         levelUI.AnnouncerTextLine1.text = "FIGHT IT OUT!";
+         
 
-        //and for every player enable what they need to have open to be controlled
-        for (int i = 0; i < charM.players.Count; i++)
-        {
-            //for user players, enable the input handler for example
-            if(charM.players[i].playerType == PlayerBase.PlayerType.user)
-            {
-                InputHandler ih = charM.players[i].playerStates.gameObject.GetComponent<InputHandler>();
-                ih.playerInput = charM.players[i].inputId;
-                ih.enabled = true;
-            }
-
-            //If it's an AI character
-             if(charM.players[i].playerType == PlayerBase.PlayerType.ai)
-             {
-                 AICharacter ai = charM.players[i].playerStates.gameObject.GetComponent<AICharacter>();
-                 ai.enabled = true;
-                 
-                 //assign the enemy states to be the one from the opposite player
-                 ai.enStates = charM.returnOppositePlater(charM.players[i]).playerStates;
-             }
-        }
+  
 
         //after a second, disable the announcer text
         yield return oneSec;
@@ -233,6 +224,7 @@ public class LevelManager : MonoBehaviour {
 
     void DisableControl()
     {
+       
         //to disable the controls, you need to disable the component that makes a character controllable
         for (int i = 0; i < charM.players.Count; i++)
         {
@@ -240,9 +232,9 @@ public class LevelManager : MonoBehaviour {
             //charM.players[i].playerStates.ResetStateInputs();
 
             //for user players, that's the input handler
-            if(charM.players[i].playerType == PlayerBase.PlayerType.user)
+           if(charM.players[i].playerType == PlayerBase.PlayerType.user)
             {
-                charM.players[i].playerStates.GetComponent<InputHandler>().enabled = false;
+                charM.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = false;
             }
 
             if(charM.players[i].playerType == PlayerBase.PlayerType.ai)
@@ -337,6 +329,7 @@ public class LevelManager : MonoBehaviour {
         }
         else
         {
+            
             for (int i = 0; i < charM.players.Count; i++)
             {
                 charM.players[i].score = 0;
