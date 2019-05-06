@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class TopmanStats : MonoBehaviour
 {
@@ -260,7 +260,7 @@ public class TopmanStats : MonoBehaviour
         System.Console.WriteLine(KillCount);
         if (KillCount == 0)
         {
-            EditorSceneManager.LoadScene(4);
+            SceneManager.LoadScene(4);
         }
     }
 }

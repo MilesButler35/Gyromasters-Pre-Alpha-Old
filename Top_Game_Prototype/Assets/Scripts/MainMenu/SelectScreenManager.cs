@@ -18,7 +18,7 @@ public class SelectScreenManager : MonoBehaviour
     public bool bothPlayersSelected;
     private bool progressionMade;
     private int stepsToWin;
-    private bool stageSelected;
+    private bool stageSelected = false;
     
     
 
@@ -252,6 +252,18 @@ public class SelectScreenManager : MonoBehaviour
                     
                     Debug.Log(potraitList[ranValue].characterId);
                 }
+                else
+                {
+            
+                    charManager.players[i].playerPrefab.GetComponent<TopmanPlayerController>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanBarrier>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanDive>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<TopmanRush>().enabled = false;
+                    charManager.players[i].playerPrefab.GetComponent<AIManager>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIBarrier>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIDive>().enabled = true;
+                    charManager.players[i].playerPrefab.GetComponent<AIRush>().enabled = true;
+                }
 
             }
             else
@@ -299,12 +311,14 @@ public class SelectScreenManager : MonoBehaviour
         {
             if (stageSelected == false)
             {
-                stageSelected = true;
+                
              
                 MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "Loading");
+                stageSelected = true;
                 
+
             }
-            if (stageSelected == true)
+            else
             {
                
                 MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");

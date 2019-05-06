@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
@@ -31,12 +31,12 @@ public class WinScreen : MonoBehaviour
     }*/
     public void select()
     {
-        EditorSceneManager.LoadScene(2);
+        SceneManager.LoadScene(2);
         sceneManager.progressionBase = 0;
     }
     public void title()
     {
-        EditorSceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
         sceneManager.progressionBase = 0;
     }
 }

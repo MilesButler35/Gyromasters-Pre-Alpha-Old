@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour {
 
     //variables for the countdown
     public bool countdown;
-    public int maxTurnTimer = 30;
+    public int maxTurnTimer = 60;
     int currentTimer;
     float internalTimer;
 
@@ -67,6 +67,10 @@ public class LevelManager : MonoBehaviour {
         {
             HandleTurnTimer();//control the timer here
         }
+        if (charM.players[0].score >= maxTurns || charM.players[0].score >= maxTurns)
+        {
+            EndTurnFunction(false);
+        }
     }
 
     void HandleTurnTimer()
@@ -86,6 +90,7 @@ public class LevelManager : MonoBehaviour {
             EndTurnFunction(true);//end the turn
             countdown = false;
         }
+
     }
 
     IEnumerator StartGame()
@@ -194,8 +199,8 @@ public class LevelManager : MonoBehaviour {
     {
         //start with the announcer text
 
-         /*levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
-         levelUI.AnnouncerTextLine1.text = "Round " + currentTurn;
+         levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
+         /*levelUI.AnnouncerTextLine1.text = "Round " + currentTurn;
          levelUI.AnnouncerTextLine1.color = Color.white;
          yield return oneSec;
          yield return oneSec;
@@ -261,7 +266,8 @@ public class LevelManager : MonoBehaviour {
             levelUI.AnnouncerTextLine1.text = "Time Out!";
             levelUI.AnnouncerTextLine1.color = Color.cyan;
         }
-        else
+
+        if (charM.players[0].score >=maxTurns || charM.players[1].score >= maxTurns)
         {
             levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
             levelUI.AnnouncerTextLine1.text = "K.O.";
