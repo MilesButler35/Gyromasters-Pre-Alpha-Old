@@ -9,7 +9,7 @@ public class WinScreen : MonoBehaviour
     {
         sceneManager = gameObject.GetComponent<MySceneManager>();
     }
-    public void Update()
+   /* public void Update()
     {
         if (Input.GetButton("Submit"))
         {
@@ -22,7 +22,7 @@ public class WinScreen : MonoBehaviour
         {
             title();
         }
-    }
+    }*/
 
   /*  public void restart()
     {
@@ -39,5 +39,18 @@ public class WinScreen : MonoBehaviour
         SceneManager.LoadScene(0);
         sceneManager.progressionBase = 0;
     }
+
+    public void CharSelect()
+    {
+        SceneManager.LoadScene(3);
+        sceneManager.progressionBase = 0;
+    }
+    public void StageSelect()
+    {
+        SceneManager.LoadScene(1);
+        
+    }
+
+
 }
 

@@ -35,7 +35,9 @@ public class TopmanStats : MonoBehaviour
     private float m_StunTimer;
     private bool m_Dead;
     private bool m_Stunned = false;
-    public int KillCount = 2;
+    public int KillCount;
+    LevelManager levelManager;
+    CharacterManager charM;
 
     private void Awake()
     {
@@ -51,11 +53,15 @@ public class TopmanStats : MonoBehaviour
         m_HeavyClashAudio = m_HeavyClashParticles.GetComponent<AudioSource>();
         m_HeavyClashParticles.gameObject.SetActive(false);
 
+
+        charM = CharacterManager.GetInstance();
+        levelManager = LevelManager.GetInstance();
     }
 
     private void Start()
     {
         InvokeRepeating("LoseHealth", 1.0f, 2f);
+        KillCount = levelManager.maxTurns;
     }
 
     private void OnEnable()
@@ -66,6 +72,7 @@ public class TopmanStats : MonoBehaviour
         playerController = gameObject.GetComponent<TopmanPlayerController>();
         SetHealthUI();
         m_Slider.maxValue = m_StartingHealth;
+
         //Lose Health every 2 seconds
         //InvokeRepeating("LoseHealth", 1.0f, 2f);
     }
@@ -258,9 +265,25 @@ public class TopmanStats : MonoBehaviour
         ResetState();
         KillCount--;
         System.Console.WriteLine(KillCount);
+        
         if (KillCount == 0)
         {
-            SceneManager.LoadScene(4);
+            for (int i = 0; i < charM.players.Count; i++)
+            {
+                if (m_PlayerNumber == 2)
+                {
+                    levelManager.vPlayer = charM.players[0];
+                    levelManager.EndTurnFunction(false);
+                }
+                else
+                {
+                    levelManager.vPlayer = charM.players[1];
+                    levelManager.EndTurnFunction(false);
+                }
+            }
         }
+        Debug.Log("Lives: " + KillCount);
+        Debug.Log("Winning Player Number: " + m_PlayerNumber);
+        Debug.Log("Max Lives: " + KillCount);
     }
 }

@@ -16,7 +16,7 @@ public class SelectScreenManager : MonoBehaviour
    
     bool loadLevel; //if we are loading the level  
     public bool bothPlayersSelected;
-    private bool progressionMade;
+    private bool progressionMade = false;
     private int stepsToWin;
     private bool stageSelected = false;
     
@@ -25,7 +25,7 @@ public class SelectScreenManager : MonoBehaviour
     CharacterManager charManager;
 
     GameObject potraitPrefab;
-    LevelManager levelManager;
+
 
     #region Singleton
     public static SelectScreenManager instance;
@@ -45,7 +45,7 @@ public class SelectScreenManager : MonoBehaviour
         //we start by getting the reference to the character manager
         charManager = CharacterManager.GetInstance();
         numberOfPlayers = charManager.numberOfUsers;
-        levelManager = LevelManager.GetInstance();
+
 
         potraitPrefab = Resources.Load("potraitPrefab") as GameObject;
         CreatePotraits();
@@ -132,7 +132,7 @@ public class SelectScreenManager : MonoBehaviour
             StartCoroutine("LoadLevel"); //and start the coroutine to load the level
             loadLevel = true;
             bothPlayersSelected = false;
-            progressionMade = false;
+            
             
         }
         else
@@ -301,7 +301,7 @@ public class SelectScreenManager : MonoBehaviour
                 Debug.Log("ProgressionMade");
                 
             }
-            else if (progressionMade == true )
+            else if (progressionMade == true)
             {
                 MySceneManager.GetInstance().LoadNextOnProgression();
             }
@@ -341,21 +341,24 @@ public class SelectScreenManager : MonoBehaviour
 
     void HandleSelectorPosition(PlayerInterfaces pl)
     {
-        pl.selector.SetActive(true); //enable the selector
-
-        PotraitInfo pi = ReturnPotrait(pl.activeX, pl.activeY);//
-
-        if (pi != null)
+        if (progressionMade == false)
         {
-            pl.activePotrait = pi; //find the active potrait
+            pl.selector.SetActive(true); //enable the selector
 
-            //and place the selector over it's position
-            Vector2 selectorPosition = pl.activePotrait.transform.localPosition;
+            PotraitInfo pi = ReturnPotrait(pl.activeX, pl.activeY);//
 
-            selectorPosition = selectorPosition + new Vector2(potraitCanvas.transform.localPosition.x
-                , potraitCanvas.transform.localPosition.y);
+            if (pi != null)
+            {
+                pl.activePotrait = pi; //find the active potrait
 
-            pl.selector.transform.localPosition = selectorPosition;
+                //and place the selector over it's position
+                Vector2 selectorPosition = pl.activePotrait.transform.localPosition;
+
+                selectorPosition = selectorPosition + new Vector2(potraitCanvas.transform.localPosition.x
+                    , potraitCanvas.transform.localPosition.y);
+
+                pl.selector.transform.localPosition = selectorPosition;
+            }
         }
     }
 

@@ -10,13 +10,13 @@ public class LevelManager : MonoBehaviour {
     public Slider p1BSlider;
     public Slider p1RSlider;
     public Slider p1DSlider;
-    public Text p1Lives;
+
 
     public Text p2Health;
     public Slider p2BSlider;
     public Slider p2RSlider;
     public Slider p2DSlider;
-    public Text p2Lives;
+
     public bool controlEnabled;
 
     WaitForSeconds oneSec;//we will be using this a lot so we don't want to create a new one everytime, saves a few bytes this
@@ -26,6 +26,11 @@ public class LevelManager : MonoBehaviour {
     CameraControl camM;
     CharacterManager charM;
     LevelUI levelUI;//we store ui elements here for ease of access
+    TopmanStats topmanStats;
+    MySceneManager sceneManager;
+
+
+   public PlayerBase vPlayer;
 
     public int maxTurns = 2;
     int currentTurn = 1;//the current turn we are, start at 1
@@ -35,6 +40,8 @@ public class LevelManager : MonoBehaviour {
     public int maxTurnTimer = 60;
     int currentTimer;
     float internalTimer;
+   
+
 
 
 
@@ -45,7 +52,8 @@ public class LevelManager : MonoBehaviour {
         charM = CharacterManager.GetInstance();
         levelUI = LevelUI.GetInstance();
         camM = GameObject.Find("CameraRig").GetComponent<CameraControl>();
-
+        sceneManager = MySceneManager.GetInstance();
+        vPlayer = null;
         //init the WaitForSeconds
         oneSec = new WaitForSeconds(1);
 
@@ -55,9 +63,10 @@ public class LevelManager : MonoBehaviour {
         //Turn off AI and Player Controls
         controlEnabled = false;
 
-        
+
 
         StartCoroutine("StartGame");
+        
        
 	}
 
@@ -67,10 +76,12 @@ public class LevelManager : MonoBehaviour {
         {
             HandleTurnTimer();//control the timer here
         }
-        if (charM.players[0].score >= maxTurns || charM.players[0].score >= maxTurns)
+        if (charM.players[0].score >= maxTurns || charM.players[1].score >= maxTurns)
         {
             EndTurnFunction(false);
         }
+
+
     }
 
     void HandleTurnTimer()
@@ -85,7 +96,7 @@ public class LevelManager : MonoBehaviour {
             internalTimer = 0;
         }
 
-        if (currentTimer <= 0) //if the countdown is over
+       if (currentTimer <= 0) //if the countdown is over
         {
             EndTurnFunction(true);//end the turn
             countdown = false;
@@ -174,6 +185,7 @@ public class LevelManager : MonoBehaviour {
 
             //charM.players[i].playerStates.healthSlider = levelUI.healthSliders[i];
 
+    
             camM.m_Targets.Add(go.transform);
         }
 
@@ -217,9 +229,9 @@ public class LevelManager : MonoBehaviour {
          yield return oneSec;*/
          levelUI.AnnouncerTextLine1.color = Color.red;
          levelUI.AnnouncerTextLine1.text = "FIGHT IT OUT!";
-         
 
-  
+
+
 
         //after a second, disable the announcer text
         yield return oneSec;
@@ -266,16 +278,16 @@ public class LevelManager : MonoBehaviour {
             levelUI.AnnouncerTextLine1.text = "Time Out!";
             levelUI.AnnouncerTextLine1.color = Color.cyan;
         }
-
-        if (charM.players[0].score >=maxTurns || charM.players[1].score >= maxTurns)
+        else
         {
             levelUI.AnnouncerTextLine1.gameObject.SetActive(true);
-            levelUI.AnnouncerTextLine1.text = "K.O.";
+            levelUI.AnnouncerTextLine1.text = "KO!";
             levelUI.AnnouncerTextLine1.color = Color.red;
         }
 
+
         //disable the controlls
-        DisableControl();
+        //DisableControl();
 
         //and start the coroutine for end turn
         StartCoroutine("EndTurn");
@@ -289,7 +301,7 @@ public class LevelManager : MonoBehaviour {
         yield return oneSec;
 
         //find who was the player that won
-        PlayerBase vPlayer = FindWinningPlayer();
+       
 
         if(vPlayer == null) //if our function returned a null
         {
@@ -306,11 +318,11 @@ public class LevelManager : MonoBehaviour {
 
         //wait 3 more seconds
         yield return oneSec;
-        yield return oneSec;
-        yield return oneSec;
+      //  yield return oneSec;
+        // yield return oneSec;
 
         //check to see if the victorious player has taken any damage
-        if (vPlayer != null)
+        /*if (vPlayer != null)
         {
             //if not, then it's a flawless victory
             if (vPlayer.playerStates.health == 100)
@@ -318,7 +330,7 @@ public class LevelManager : MonoBehaviour {
                 levelUI.AnnouncerTextLine2.gameObject.SetActive(true);
                 levelUI.AnnouncerTextLine2.text = "Flawless Victory!";
             }
-        }
+        }*/
 
         //wait 3 seconds
         yield return oneSec;
@@ -327,14 +339,13 @@ public class LevelManager : MonoBehaviour {
 
         currentTurn++;//add to the turn counter
 
-        bool matchOver = isMatchOver();
+  
 
-        if (!matchOver)
+        /*if (!matchOver)
         {
             StartCoroutine("InitTurn"); // and start the loop for the next turn again
-        }
-        else
-        {
+        }*/
+     
             
             for (int i = 0; i < charM.players.Count; i++)
             {
@@ -346,20 +357,24 @@ public class LevelManager : MonoBehaviour {
             {
                 if (vPlayer == charM.players[0])
                 {
-                    MySceneManager.GetInstance().LoadNextOnProgression();
-                    Debug.Log("GoToLoading");
+                sceneManager.RequestLevelLoad(SceneType.prog, "StageSelect");
+                Debug.Log("GoToLoading");
                 }
                 else if (vPlayer == charM.players[1])
-                    MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "GameOver");
+                    sceneManager.RequestLevelLoad(SceneType.main, "GameOver");
+                else
+                {
+                    sceneManager.RequestLevelLoad(SceneType.main, "GameOver");
+                }
             }
             else
             {
-                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
+                sceneManager.RequestLevelLoad(SceneType.main, "WinScreen");
             }
-        }
+        
     }
   
-    bool isMatchOver()
+   /* bool isMatchOver()
     {
         bool retVal = false;
 
@@ -373,9 +388,9 @@ public class LevelManager : MonoBehaviour {
         }
 
         return retVal;
-    }
+    }*/
 
-    PlayerBase FindWinningPlayer()
+  /*  PlayerBase FindWinningPlayer()
     {
         //to find who won the turn
         PlayerBase retVal = null;
@@ -404,7 +419,7 @@ public class LevelManager : MonoBehaviour {
 
         return retVal;
     }
-
+    */
     public static LevelManager instance;
     public static LevelManager GetInstance()
     {

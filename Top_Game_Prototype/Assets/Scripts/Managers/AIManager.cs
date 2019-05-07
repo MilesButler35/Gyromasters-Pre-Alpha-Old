@@ -17,11 +17,12 @@ public class AIManager : MonoBehaviour
     private Rigidbody rb;
     private float moveHorizontal;
     private float moveVertical;
-    private string h_MovementAxisName;
-    private string v_MovementAxisName;
+ //   private string h_MovementAxisName;
+   //  private string v_MovementAxisName;
     private float choice;
     public Vector3 moveDirection;
     public float dist;
+   
     
 
     public enum StateMachine { MOVE, STUN, BARRIER, DIVE, RUSH }
@@ -48,8 +49,9 @@ public class AIManager : MonoBehaviour
     void Start()
     {
         Player1 = GameObject.Find("Player1");
-        h_MovementAxisName = "Horizontal" + m_PlayerNumber;
-        v_MovementAxisName = "Vertical" + m_PlayerNumber;
+       // h_MovementAxisName = "Horizontal" + m_PlayerNumber;
+       // v_MovementAxisName = "Vertical" + m_PlayerNumber;
+        
 
 
     }
@@ -64,10 +66,6 @@ public class AIManager : MonoBehaviour
         }*/
         Player1 = GameObject.Find("Player1");
         selfPos = self.transform.position;
-        if (playerPos == null)
-        {
-            playerPos = new Vector3(0,0,0);
-        }
         playerPos = Player1.transform.position;
         if (playerPos == null)
         {
