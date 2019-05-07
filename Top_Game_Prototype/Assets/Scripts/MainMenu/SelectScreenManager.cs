@@ -299,7 +299,7 @@ public class SelectScreenManager : MonoBehaviour
                 MySceneManager.GetInstance().LoadNextOnProgression();
                 progressionMade = true;
                 Debug.Log("ProgressionMade");
-                MySceneManager.GetInstance().progIndex++;
+                
                 
             }
             else if (progressionMade == true)

@@ -57,6 +57,9 @@ public class MySceneManager : MonoBehaviour {
       
     }
 
+    /*
+     * Issue right here where it will go straight to the 
+     */
     public void LoadNextOnProgression()
     {
         string targetId = "";

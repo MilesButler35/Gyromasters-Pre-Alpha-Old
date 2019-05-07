@@ -18,7 +18,9 @@ public class LoadingManager : MonoBehaviour
     CharacterManager charManager;
 
     GameObject potraitPrefab;
-
+    private bool progressionMade = false;
+    private int stepsToWin;
+    private bool stageSelected = false;
     MySceneManager sceneManager;
 
     #region Singleton
@@ -120,20 +122,49 @@ public class LoadingManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2);//after 2 seconds load the level
-
         if (charManager.solo)
         {
-       
-            MySceneManager.GetInstance().LoadNextOnProgression();
-            WinState();
+            if (progressionMade == true && stepsToWin >= 1)
+            {
+                stepsToWin = 0;
+
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
+            }
+            if (progressionMade == false && stepsToWin < 1)
+            {
+                MySceneManager.GetInstance().CreateProgression();
+                MySceneManager.GetInstance().LoadNextOnProgression();
+                progressionMade = true;
+                Debug.Log("ProgressionMade");
+
+
+            }
+            else if (progressionMade == true)
+            {
+                MySceneManager.GetInstance().LoadNextOnProgression();
+            }
+
         }
         else
         {
-            MySceneManager.GetInstance().RequestLevelLoad(SceneType.prog, "WinScreen");
+            if (stageSelected == false)
+            {
+
+
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "Loading");
+                stageSelected = true;
+
+
+            }
+            else
+            {
+
+                MySceneManager.GetInstance().RequestLevelLoad(SceneType.main, "WinScreen");
+
+            }
         }
 
 
-      
 
     }
 
@@ -141,7 +172,7 @@ public class LoadingManager : MonoBehaviour
     {
         if (charManager.solo)
         {
-            sceneManager.progIndex++;
+            
             sceneManager.progressionBase++;
         }
 
