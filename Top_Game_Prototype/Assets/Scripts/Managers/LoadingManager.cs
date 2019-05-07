@@ -38,8 +38,8 @@ public class LoadingManager : MonoBehaviour
         charManager = CharacterManager.GetInstance();
         numberOfPlayers = charManager.numberOfUsers;
 
-       
-        sceneManager = gameObject.GetComponent<MySceneManager>();
+
+        sceneManager = MySceneManager.GetInstance();
 
         charManager.solo = (numberOfPlayers == 1);
        
