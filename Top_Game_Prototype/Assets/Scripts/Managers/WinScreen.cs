@@ -33,17 +33,20 @@ public class WinScreen : MonoBehaviour
     {
         SceneManager.LoadScene(2);
         sceneManager.progressionBase = 0;
+        sceneManager.progIndex = 0;
     }
     public void title()
     {
         SceneManager.LoadScene(0);
         sceneManager.progressionBase = 0;
+        sceneManager.progIndex = 0;
     }
 
     public void CharSelect()
     {
         SceneManager.LoadScene(3);
         sceneManager.progressionBase = 0;
+        sceneManager.progIndex = 0;
     }
     public void StageSelect()
     {

@@ -125,6 +125,7 @@ public class LoadingManager : MonoBehaviour
         {
        
             MySceneManager.GetInstance().LoadNextOnProgression();
+            WinState();
         }
         else
         {
@@ -132,7 +133,7 @@ public class LoadingManager : MonoBehaviour
         }
 
 
-        WinState();
+      
 
     }
 
@@ -140,8 +141,8 @@ public class LoadingManager : MonoBehaviour
     {
         if (charManager.solo)
         {
-            sceneManager.progIndex += 1;
-            sceneManager.progressionBase += 1;
+            sceneManager.progIndex++;
+            sceneManager.progressionBase++;
         }
 
         if (sceneManager.progressionBase == 2 && charManager.solo)

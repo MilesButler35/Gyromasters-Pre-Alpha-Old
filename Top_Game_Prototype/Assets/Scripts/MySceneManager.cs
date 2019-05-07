@@ -10,7 +10,7 @@ public class MySceneManager : MonoBehaviour {
     public List<MainScenes> mainScenes = new List<MainScenes>();
 
     bool waitToLoad;
-    public int progIndex = 0;
+    public int progIndex;
     public List<SoloProgression> progression = new List<SoloProgression>();
     public int progressionBase;
 
