@@ -21,4 +21,4 @@ Implement jump ability into AI.
 
 Make AI stay in place after player is destroyed.
 
-Go over all levels to see if bounds are comppliant with level size.
+Go over all levels to see if bounds are compliant with level size.
