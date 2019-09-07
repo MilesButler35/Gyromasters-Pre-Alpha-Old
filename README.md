@@ -12,8 +12,13 @@ https://www86.zippyshare.com/v/gW2ROdDO/file.html
 To Do List:
 
 Fix the Pause Menu UI
+
 Fix Resolutions so that UI sits on it across various resolutions
+
 Figure out aesthetics for game.
+
 Implement jump ability into AI. 
+
 Make AI stay in place after player is destroyed.
+
 Go over all levels to see if bounds are comppliant with level size.
